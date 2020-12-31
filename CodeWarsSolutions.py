@@ -29,8 +29,7 @@ The minimum number is "zero" (inclusively)
 The maximum number, which must be supported is 1 million (inclusively)
 The "and" in e.g. "one hundred and twenty-four" is optional, in some cases it's present and in others it's not
 All tested numbers are valid, you don't need to validate them
-'''
-'''
+
 #my solution
 def checkNum(resStr, s, short, long):
     if len(s) == 1:
