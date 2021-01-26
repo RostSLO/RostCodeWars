@@ -2,6 +2,19 @@ from pickle import FALSE
 import itertools,operator
 from future.backports.test.pystone import TRUE
 
+def cakes(recipe, available):
+    return min([int(available.get(item, 0)/recipe[item]) if item in available  else 0 for item in recipe])
+
+
+recipe = {"flour": 500, "sugar": 200, "eggs": 1}
+available = {"flour": 1200, "sugar": 1200, "eggs": 5, "milk": 200}
+res = cakes(recipe, available)#, 2, 'Wrong result for example #1')
+print(str(res))
+
+recipe = {"apples": 3, "flour": 300, "sugar": 150, "milk": 100, "oil": 100}
+available = {"sugar": 500, "flour": 2000, "milk": 2000}
+res = cakes(recipe, available)#, 0, 'Wrong result for example #2')
+print(str(res))
 
 #res = parse_int('five hundred thousand three hundred')
 #print (str(res))
@@ -17,7 +30,6 @@ NAME: Directions Reduction
 Description:
 Once upon a time, on a way through the old wild mountainous west,…
 … a man was given directions to go from one point to another. The directions were "NORTH", "SOUTH", "WEST", "EAST". Clearly "NORTH" and "SOUTH" are opposite, "WEST" and "EAST" too.
-
 Going to one direction and coming back the opposite direction right away is a needless effort. Since this is the wild west, with dreadfull weather and not much water, it's important to save yourself some energy, otherwise you might die of thirst!
 
 How I crossed a mountainous desert the smart way.
