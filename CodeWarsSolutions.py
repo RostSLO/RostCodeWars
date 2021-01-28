@@ -2,26 +2,70 @@ from pickle import FALSE
 import itertools,operator
 from future.backports.test.pystone import TRUE
 
+
+
+'''
+==========================================================================
+NAME: Is my friend cheating?
+
+def remov_nb(n):
+    resList = []
+    x = n*(n+1)/2  
+    for a in range(n):
+        if (x-a)%(a+1) == 0:
+            b = (x - a) / (a + 1)
+            if b < n and a!= b:
+                resList.append((a, int(b)))
+    return resList
+
+'''
+
+
+'''
+==========================================================================
+NAME: Pete, the baker
+
+
 def cakes(recipe, available):
     return min([int(available.get(item, 0)/recipe[item]) if item in available  else 0 for item in recipe])
 
-
-recipe = {"flour": 500, "sugar": 200, "eggs": 1}
-available = {"flour": 1200, "sugar": 1200, "eggs": 5, "milk": 200}
-res = cakes(recipe, available)#, 2, 'Wrong result for example #1')
-print(str(res))
-
-recipe = {"apples": 3, "flour": 300, "sugar": 150, "milk": 100, "oil": 100}
-available = {"sugar": 500, "flour": 2000, "milk": 2000}
-res = cakes(recipe, available)#, 0, 'Wrong result for example #2')
-print(str(res))
-
-#res = parse_int('five hundred thousand three hundred')
-#print (str(res))
+'''
 
 
-#res = parse_int('two hundred three thousand')
-#print (str(res))
+'''
+==========================================================================
+NAME: Roman Numerals Encoder
+
+def solution(roman):
+    romValues = {1000:'M',
+                      900: 'CM',
+                      500: 'D',
+                      400: 'CD',
+                      100: 'C',
+                      90: 'XC',
+                      50: 'L',
+                      40: 'XL',
+                      10: 'X',
+                      9: 'IX',
+                      5: 'V',
+                      4: 'IV',
+                      1: 'I'
+    }
+    num = ''
+    numBefore = ''
+    res = 0
+    for num in list(roman)[::-1]:
+        if res == 0:
+            res = romValues[num]
+        elif romValues[num] >= romValues[numBefore]:
+            res += romValues[num]
+        else:
+            res -= romValues[num]
+            
+        numBefore = num    
+    
+    return res
+''' 
 
 
 '''
