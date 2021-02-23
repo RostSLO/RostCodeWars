@@ -6,6 +6,85 @@ from future.backports.test.pystone import TRUE
 
 '''
 ==========================================================================
+NAME: Playing with passphrases
+
+def play_pass(s, n):
+    resStr = ""
+    counter = 1
+    s = s.lower()
+    for c in s:
+        index = 0
+        if c.isdigit(): resStr += str(9-int(c))
+        elif not c.isdigit() and not c.isalpha(): resStr += c
+        else: 
+            if (ord(c) + n) > ord("z"): index = 96 + (ord(c) + n) - ord("z")
+            else: index = (ord(c) + n)
+     
+            if not counter%2:
+                resStr += chr(index).lower()
+            else: resStr += chr(index).upper()
+        counter += 1
+        
+    return resStr[::-1]
+'''
+'''
+==========================================================================
+NAME: Playing with digits
+
+def dig_pow(n, p):
+
+    resStr = str(n)
+    sum = counter = 0
+    
+    for i in resStr:
+        sum += int(i)**(p+counter)
+        counter += 1
+    
+    return (int(sum/n) if not sum%n else -1)
+'''
+
+'''
+==========================================================================
+NAME: Stop gninnipS My sdroW
+
+def spin_words(sentence):
+
+    return " ".join(word[::-1] if len(word) >= 5 else word for word in sentence.split(" ")) 
+
+'''
+
+'''
+==========================================================================
+NAME: count '9's from 1 to n
+
+def count_nines(n):
+#    return "".join(str(i) for i in range(n+1)).count("9")
+    
+    strN = str(n)
+    resInt = 0
+    lenOfStr = len(strN)
+    counter = 0
+    if n >= 9:
+        for i in strN:
+            currentI = int(i)
+            if counter < lenOfStr - 1:
+                if currentI == 9:
+                    resInt +=  9*(lenOfStr-counter-1)*10**(lenOfStr-counter-2) + 1 + int(strN[counter+1:])
+                    counter += 1
+                else: 
+                    resInt += currentI*((lenOfStr-counter-1)*10**(lenOfStr-counter-2))
+                    counter += 1
+            else:
+                if currentI == 9: resInt += 1
+    else: return resInt
+    
+    return resInt
+
+'''
+
+
+'''
+==========================================================================
 NAME: Is my friend cheating?
 
 def remov_nb(n):
