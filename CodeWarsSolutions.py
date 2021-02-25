@@ -4,6 +4,140 @@ from future.backports.test.pystone import TRUE
 
 
 
+
+'''
+==========================================================================
+NAME: Find The Parity Outlier
+
+def persistence(n):
+    
+    counter = 1
+    strNum = str(n)
+    resNum = 1
+    resBool = False
+    
+    if n < 9:
+        return 0
+    
+    while not resBool:
+        for chr in strNum:
+            resNum *= int(chr)
+
+        if resNum >= 10: 
+            counter += 1
+            strNum = str(resNum)
+            resNum = 1
+        else: 
+            resBool = not resBool    
+        
+    
+    return counter
+    
+    
+'''
+
+'''
+==========================================================================
+NAME: Find The Parity Outlier
+
+def find_outlier(integers):
+
+    resNum = 0
+    oddEven = -1
+    
+    if len(integers) == 0:
+        return None
+    elif len(integers) == 1:
+        return integers[0]
+    else:
+        if (integers[0]%2 == 0 and integers[1]%2 == 0) or (integers[1]%2 == 0 and integers[2]%2 == 0) or (integers[0]%2 == 0 and integers[2]%2 == 0): oddEven = 1
+        else: oddEven = 0
+    
+    for item in integers:
+        if oddEven == 0 and item%2 == 0:
+                return item
+        if oddEven == 1 and item%2 != 0:
+                return item
+            
+    
+    return resNum
+    
+    
+'''
+
+
+'''
+==========================================================================
+NAME: Statistics for an Athletic Association
+
+def secToTimeFormat(sec):
+    #transfer seconds to time format
+    
+    resStr = ""
+    #calculating hours
+    h = sec / 3600
+    if h < 0:
+        resStr += "00|"
+    elif int(h) < 10 :
+        resStr += "0" + str(int(h)) + "|"
+    else:
+        resStr += str(int(h)) + "|"
+    
+    sec = sec - int(h)*3600
+    
+    m = sec / 60    
+    if m < 0:
+        resStr += "00|" + str(sec)
+    elif m < 10: 
+        resStr += "0" + str(int(m)) + "|" 
+    else:
+        resStr += str(int(m)) + "|" 
+     
+    sec = int(sec - int(m)*60)
+     
+    if sec < 10:
+        resStr += "0" + str(sec)
+    else:
+        resStr += str(sec)
+        
+    return resStr    
+    
+
+def stat(strg):
+
+    if strg is None or strg == "":
+        return ""
+    
+    inputList = strg.split(", ")
+    
+    tempList = []
+    
+    #transfer time to seconds
+    for item in inputList:
+        tempList.clear()
+        tempList = item.split("|")
+        inputList[inputList.index(item)] = 3600*int(tempList[0]) + 60*int(tempList[1]) + int(tempList[2])  
+    
+    #find Range
+    resStr = "Range: " + secToTimeFormat(max(inputList) - min(inputList))
+    
+    #find Mean or Average
+    resStr += " Average: " + secToTimeFormat(int(sum(inputList)/len(inputList)))
+
+    inputList.sort()
+
+    #find Median
+    if not len(inputList)%2:
+        resStr += " Median: " + secToTimeFormat(int(inputList[int(len(inputList)/2)-1] + inputList[int(len(inputList)/2)])/2)
+    else:
+        resStr += " Median: " + secToTimeFormat(inputList[int(len(inputList)/2)])
+    
+    return resStr
+    
+'''
+
+
+
 '''
 ==========================================================================
 NAME: Playing with passphrases
