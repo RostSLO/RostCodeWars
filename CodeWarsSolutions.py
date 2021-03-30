@@ -1,7 +1,129 @@
-from pickle import FALSE
-import itertools,operator
-from future.backports.test.pystone import TRUE
 
+
+
+
+
+
+res = find_it([1, 1, 1, 1, 1, 1, 10, 1, 1, 1, 1])
+print(str(res))
+
+
+res = find_it([1,1,2,-2,5,2,4,4,-1,-2,5])
+print(str(res))
+
+
+
+'''
+==========================================================================
+Find the odd int
+
+
+def find_it(seq):
+    for i in seq:
+        if seq.count(i)%2!=0:
+            return i
+'''
+
+
+'''
+==========================================================================
+
+Multiples of 3 or 5
+
+def solution(number):
+    
+    if number < 0: return 0
+    
+    resList = []
+    
+    resList = [i for i in range(0, number, 3)]
+    resList += [i for i in range(0, number, 5)]
+
+    return sum(set(resList))
+'''
+
+'''
+def epidemic(tm, n, s, i, b, a):
+    def f(s, i, r):  
+        dt = tm / n
+        for t in range(n):
+            s, i, r = s-dt*b*s*i, i+dt*(b*s*i-a*i), r+dt*i*a
+            yield i
+    return int(max(f(s, i, 0)))
+
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+
+def epidemic(tm, n, s0, i0, b, a):
+    # your code
+    dt = tm/n
+    S = []
+    I = []
+    R = []
+    S.append(s0)
+    I.append(i0)
+    R.append(0)
+    for k in range(n-1):
+        S.append(S[k] - dt * b * S[k] * I[k])
+        I.append(I[k] + dt * (b * S[k] * I[k] - a * I[k]))
+        R.append(R[k] + dt * I[k] *a)
+    
+    df = pd.DataFrame({'Susceptible': S,
+                     'Infected': I,
+                     'Recovered': R})
+    
+    df.plot()
+    
+    plt.show()
+    
+    return int(max(I))
+
+'''
+
+'''
+==========================================================================
+def run(tricks):
+   
+    resDict = {}
+   
+    for i in range(len(tricks)):
+        currentVal = nextVal = previousPoints = counter = 0
+        while currentVal <= nextVal:
+            counter += 1
+            currentVal = nextVal
+
+            nextVal = (tricks[i]['probability']**(counter))*(previousPoints + tricks[i]['points']*tricks[i]['mult_base']**(counter-1))
+            previousPoints += (tricks[i]['points']*tricks[i]['mult_base']**(counter-1))
+        
+        #print(str(currentVal))    
+        resDict[tricks[i]['name']] = counter-1
+
+    return resDict
+
+res = run([{ 'name': 'kickflip', 'points': 100, 'mult_base': .8, 'probability': .95 },
+           { 'name': 'heelflip', 'points': 101, 'mult_base': .25, 'probability': .95 },])
+print(res)
+
+res = run([{ 'name': 'kickflip', 'points': 100, 'mult_base': .8, 'probability': .95 },
+           { 'name': 'pop shove it', 'points': 50, 'mult_base': .75, 'probability': .99 },])
+print(res)
+
+res = run([{ 'name': 'kickflip', 'points': 100, 'mult_base': .8, 'probability': .95 },
+                        { 'name': 'pop shove it', 'points': 50, 'mult_base': .75, 'probability': .995 },
+                        { 'name': '360 flip', 'points': 250, 'mult_base': .825, 'probability': .9 },])
+print(res)
+
+res = run([{ 'name': 'kickflip', 'points': 100, 'mult_base': .8, 'probability': .95 },
+                        { 'name': 'pop shove it', 'points': 50, 'mult_base': .75, 'probability': .995 },
+                        { 'name': '360 flip', 'points': 250, 'mult_base': .825, 'probability': .9 },
+                        { 'name': '50-50 grind', 'points': 150, 'mult_base': .9, 'probability': .925 },
+                        { 'name': 'noseslide', 'points': 100, 'mult_base': .8, 'probability': .95 },
+                        { 'name': 'manual', 'points': 50, 'mult_base': .99, 'probability': .975 },])
+print(res)
+'''
 
 '''
 ==========================================================================
@@ -304,8 +426,7 @@ def solution(roman):
 ==========================================================================
 NAME: Directions Reduction
 Description:
-Once upon a time, on a way through the old wild mountainous west,…
-… a man was given directions to go from one point to another. The directions were "NORTH", "SOUTH", "WEST", "EAST". Clearly "NORTH" and "SOUTH" are opposite, "WEST" and "EAST" too.
+Once upon a time, on a way through the old wild mountainous west, a man was given directions to go from one point to another. The directions were "NORTH", "SOUTH", "WEST", "EAST". Clearly "NORTH" and "SOUTH" are opposite, "WEST" and "EAST" too.
 Going to one direction and coming back the opposite direction right away is a needless effort. Since this is the wild west, with dreadfull weather and not much water, it's important to save yourself some energy, otherwise you might die of thirst!
 
 How I crossed a mountainous desert the smart way.
@@ -584,12 +705,10 @@ In this kata you have to write a Morse code decoder for wired electrical telegra
 Electric telegraph is operated on a 2-wire line with a key that, when pressed, connects the wires together, which can be detected on a remote station. The Morse code encodes every character being transmitted as a sequence of "dots" (short presses on the key) and "dashes" (long presses on the key).
 
 When transmitting the Morse code, the international standard specifies that:
-
-"Dot" – is 1 time unit long.
-"Dash" – is 3 time units long.
-Pause between dots and dashes in a character – is 1 time unit long.
-Pause between characters inside a word – is 3 time units long.
-Pause between words – is 7 time units long.
+"Dot" is 1 time unit long. "Dash" is 3 tie units long. 
+Pause between dots and dashes in a character is 1 time unit long.
+Pause between characters inside a word  is 3 time units long.
+Pause between words is 7 time units long.
 However, the standard does not specify how long that "time unit" is. And in fact different operators would transmit at different speed. An amateur person may need a few seconds to transmit a single character, a skilled professional can transmit 60 words per minute, and robotic transmitters may go way faster.
 
 For this kata we assume the message receiving is performed automatically by the hardware that checks the line periodically, and if the line is connected (the key at the remote station is down), 1 is recorded, and if the line is not connected (remote key is up), 0 is recorded. After the message is fully received, it gets to you for decoding as a string containing only symbols 0 and 1.
