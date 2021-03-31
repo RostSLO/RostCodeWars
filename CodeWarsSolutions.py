@@ -1,15 +1,59 @@
 
 
+res = tribonacci([1, 1, 1], 1)
+print(res)
 
 
+res = tribonacci([0, 0, 1], 10)
+print(res)
 
 
-res = find_it([1, 1, 1, 1, 1, 1, 10, 1, 1, 1, 1])
-print(str(res))
+res = tribonacci([300, 200, 100], 0)
+print(res)
 
 
-res = find_it([1,1,2,-2,5,2,4,4,-1,-2,5])
-print(str(res))
+'''
+==========================================================================
+Tribonacci Sequence
+
+def tribonacci(signature, n):
+    
+    if n == 0 or signature is None or len(signature) == 0:
+        return []
+    
+    resList = signature[:n]
+    
+    for i in range(n-3): resList.append(sum(resList[i:i+3]))
+                       
+    return resList
+        
+'''
+
+
+'''
+==========================================================================
+Bit Counting
+
+def count_bits(n):
+    
+    
+    return str(bin(n)).count('1')
+
+'''
+
+
+'''
+==========================================================================
+Duplicate encode
+
+
+def duplicate_encode(word):
+    
+    if word is None or word =='':
+        return ''
+
+    return ''.join('(' if word.count(ch) == 1 else ')' for ch in word.lower())
+'''
 
 
 
