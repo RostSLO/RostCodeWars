@@ -1,16 +1,29 @@
 
-
-res = tribonacci([1, 1, 1], 1)
+res = song_decoder("AWUBBWUBC")
 print(res)
 
 
-res = tribonacci([0, 0, 1], 10)
+res = song_decoder("AWUBWUBWUBBWUBWUBWUBC")
 print(res)
 
 
-res = tribonacci([300, 200, 100], 0)
+res = song_decoder("WUBAWUBBWUBCWUB")
 print(res)
 
+'''
+==========================================================================
+Dubstep
+    
+def song_decoder(song):
+    
+    if song is None or len(song) == 0:
+        return ""
+    
+    #return ' '.join([value for value in song.split('WUB') if value != ''])
+    
+    return " ".join(song.replace('WUB', ' ').split())
+
+'''
 
 '''
 ==========================================================================
