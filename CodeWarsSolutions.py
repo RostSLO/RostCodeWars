@@ -2,19 +2,195 @@
 
 
 
-res = find_even_index([1,2,3,4,3,2,1])
-print(str(res))
-
-
-res = find_even_index([1,100,50,-51,1,1])
-print(str(res))
-
-
-res = find_even_index([1,2,3,4,5,6])
-print(str(res))
 
 
 
+    
+
+res = make_readable(0)
+print(res)
+res = make_readable(5)
+print(res)
+res = make_readable(60)
+print(res)
+
+res = make_readable(86399)
+print(res)
+
+res = make_readable(359999)
+print(res)
+
+
+
+
+
+'''
+==========================================================================
+Human Readable Time
+
+def make_readable(seconds):
+    
+    hours = int(seconds / 3600)
+    minutes = int((seconds-hours*3600) / 60)
+    sec = seconds - minutes*60 - hours*3600
+    
+    return f'{hours:02d}:{minutes:02d}:{sec:02d}'
+'''
+
+
+'''
+==========================================================================
+Sum of pairs
+
+def sum_pairs(ints, s):
+    
+    distance = len(ints)
+    badNumbers = []
+    i = first = second =  0
+    secondNumExists = False
+    
+    for i in range(len(ints)-1):
+        if ints[i] not in badNumbers:
+            secondNumber = s - ints[i]
+            if secondNumber in ints[i+1:i+distance]:
+                if secondNumber == ints[i+1]: return [ints[i], secondNumber]
+                elif distance > ints[i+1:i+distance].index(secondNumber):
+                    first = ints[i]
+                    second = secondNumber
+                    distance = ints[i+1:i+distance].index(secondNumber)
+            else: badNumbers.append(ints[i])
+
+    return ([first, second] if distance != len(ints) else None)
+'''
+
+
+'''
+==========================================================================
+Valid Parentheses
+
+def valid_parentheses(string):
+    
+    if string == '': return True
+    
+    open = 0
+    
+    for char in string[::-1]:
+        if char == ')':
+            open -= 1
+        elif char == '(' and open < 0:
+            open += 1
+        elif char == '(':
+            return False
+            
+    return (True if open == 0 else False)        
+'''
+
+
+'''
+==========================================================================
+Highest Scoring Word
+
+def high(x):
+
+    resList = x.split(" ")
+    result = ''
+    resNum = winner = 0
+
+    for word in resList:
+        resNum = 0
+        for ch in word:
+            resNum += ord(ch) - 96
+            
+        if resNum > winner:
+            result = word
+            winner = resNum
+     
+    return result 
+
+    #return max(x.split(), key=lambda k: sum(ord(c) - 96 for c in k))
+
+'''
+
+
+
+'''
+==========================================================================
+English beggars
+
+def beggars(values, n):
+    
+    return [sum(values[i::n]) for i in range(n)]
+
+'''
+
+
+
+'''
+==========================================================================
+Unique In Order
+
+
+def unique_in_order(iterable):
+
+    return [iterable[i] for i in range(len(iterable)) if i == 0 or iterable[i] != iterable[i-1]]
+        
+
+'''
+
+
+'''
+==========================================================================
+Vasya - Clerk
+
+def tickets(people):
+    
+    bill25 = bill50 = bill100 = 0
+    
+    for bill in people:
+        if bill == 25:
+            bill25 += 1
+        if bill == 50:
+            bill50 += 1
+            if bill25 == 0: return "NO"
+            bill25 -= 1
+        if bill == 100:
+            bill100 += 1
+            if bill25 == 0 or (bill25 < 3 and bill50 == 0): return "NO"
+            if bill50 > 0:
+                bill50 -= 1
+                bill25 -= 1
+            else: bill25 -= 3
+
+    return "YES"
+'''
+
+'''
+==========================================================================
+IQ Test
+
+def iq_test(numbers):
+    
+    if numbers is None or len(numbers) == 0:
+        return 0
+    
+    resList = numbers.split(" ")
+    
+    counter = even = odd = evenPosition = oddPosition = 0
+    
+    for i in range(len(resList)):
+        counter += 1
+        if int(resList[i])%2 == 0:
+            if even > 1 and odd == 1: return oddPosition
+            even += 1
+            evenPosition = i+1
+        else:
+            if odd > 1 and even == 1: return evenPosition
+            odd += 1
+            oddPosition = i+1
+        
+    return (evenPosition if even == 1 else oddPosition)
+
+'''
 
 
 '''
