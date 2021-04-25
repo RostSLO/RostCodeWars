@@ -1,21 +1,7 @@
 
 
 
-    
-
-'''
-==========================================================================
-Human Readable Time
-'''
-def make_readable(seconds):
-    
-    hours = int(seconds / 3600)
-    minutes = int((seconds-hours*3600) / 60)
-    sec = seconds - minutes*60 - hours*3600
-    
-    return f'{hours:02d}:{minutes:02d}:{sec:02d}'
-
-res = make_readable(0)
+ res = make_readable(0)
 print(res)
 res = make_readable(5)
 print(res)
@@ -26,7 +12,21 @@ res = make_readable(86399)
 print(res)
 
 res = make_readable(359999)
-print(res)
+print(res)   
+
+'''
+==========================================================================
+Human Readable Time
+
+def make_readable(seconds):
+    
+    hours = int(seconds / 3600)
+    minutes = int((seconds-hours*3600) / 60)
+    sec = seconds - minutes*60 - hours*3600
+    
+    return f'{hours:02d}:{minutes:02d}:{sec:02d}'
+
+'''
 
 
 
