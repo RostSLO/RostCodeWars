@@ -1,18 +1,48 @@
 
 
 
- res = make_readable(0)
+res = order_weight("103  123 4444   99 2000")
 print(res)
-res = make_readable(5)
+res = order_weight("2000 10003 1234000 44444444 9999 11 11 22 123")
 print(res)
-res = make_readable(60)
+res = order_weight("")
 print(res)
+   
 
-res = make_readable(86399)
-print(res)
 
-res = make_readable(359999)
-print(res)   
+
+'''
+==========================================================================
+Weight for weight
+
+def order_weight(strng):
+
+    if strng == "" or strng is None:
+        return ""
+
+    resList = []
+    num = 0
+
+    strList = strng.split(" ")
+
+    for n in strList:
+        if n != '':
+            num = 0
+            for i in n:
+                num += int(i)
+            resList.append((num,  n))
+    resList.sort()
+
+    return ' '.join(str(i[1]) for i in resList)
+
+
+the best answer
+def order_weight(_str):
+    return ' '.join(sorted(sorted(_str.split(' ')), key=lambda x: sum(int(c) for c in x)))
+
+
+'''
+
 
 '''
 ==========================================================================
@@ -27,7 +57,6 @@ def make_readable(seconds):
     return f'{hours:02d}:{minutes:02d}:{sec:02d}'
 
 '''
-
 
 
 '''
