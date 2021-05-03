@@ -1,13 +1,34 @@
 
 
+def scramble(s1, s2):
 
-res = order_weight("103  123 4444   99 2000")
+    if s1 == '' or s1 is None or s2 == '' or s2 is None:
+        return False
+
+    i = 0
+    while i < len(s2):
+        if s2[i] not in s1:
+            return False
+        #elif s1.count(ch) < s2.count(ch):
+        #    return False
+        else:
+            s2 = s2[:i] + s2[i+1:]
+            i += 1
+            
+
+    return True
+
+
+res = scramble('rkqodlw', 'world')
 print(res)
-res = order_weight("2000 10003 1234000 44444444 9999 11 11 22 123")
+res = scramble('cedewaraaossoqqyt', 'codewars')
 print(res)
-res = order_weight("")
+res = scramble('katas', 'steak')
 print(res)
-   
+res = scramble('scriptjava', 'javascript')
+print(res)
+res = scramble('scriptingjava', 'javascript')
+print(res)
 
 
 
