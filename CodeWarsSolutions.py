@@ -1,34 +1,39 @@
 
 
-def scramble(s1, s2):
+'''
+==========================================================================
+ROT13
 
-    if s1 == '' or s1 is None or s2 == '' or s2 is None:
-        return False
+def rot13(message):
+    
+    if message == "":
+        return ""
 
-    i = 0
-    while i < len(s2):
-        if s2[i] not in s1:
-            return False
-        #elif s1.count(ch) < s2.count(ch):
-        #    return False
-        else:
-            s2 = s2[:i] + s2[i+1:]
-            i += 1
-            
+    resStr = ""
 
-    return True
+    for ch in message:
+        if ch.isalpha():
+            if ord(ch) > 96:
+                if ord(ch) + 13 > 122:
+                    resStr += chr(96 + (ord(ch) + 13 - 122))
+                else:
+                    resStr += chr(ord(ch)+13)
+            else:
+                if ord(ch) + 13 > 90:
+                    resStr += chr(64 + (ord(ch) + 13 - 90))
+                else:
+                    resStr += chr(ord(ch)+13)                
+        else: resStr += str(ch)
 
+    return resStr
 
-res = scramble('rkqodlw', 'world')
+'''
+
+res = rot13("test")
 print(res)
-res = scramble('cedewaraaossoqqyt', 'codewars')
+res = rot13("Test")
 print(res)
-res = scramble('katas', 'steak')
-print(res)
-res = scramble('scriptjava', 'javascript')
-print(res)
-res = scramble('scriptingjava', 'javascript')
-print(res)
+
 
 
 
