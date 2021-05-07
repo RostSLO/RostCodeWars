@@ -1,5 +1,159 @@
 
 
+
+
+
+
+'''
+res = zeros(15)
+print(str(res))
+res = zeros(18)
+print(str(res))
+res = zeros(19)
+print(str(res))
+res = zeros(20)
+print(str(res))
+'''
+
+'''
+==========================================================================
+Number of trailing zeros of N!
+
+from math import log 
+
+def zeros(n):
+    
+    pow_of_5 = 5
+    zeros = 0
+    
+    while n >= pow_of_5:
+        zeros += n // pow_of_5
+        pow_of_5 *= 5
+        
+    return zeros
+
+'''
+
+
+
+#Binary Tree
+
+class Node:
+
+    def __init__(self, data, level):
+
+        self.left = None
+        self.right = None
+        self.data = data
+        self.level = level
+        self.maxlevel = 1
+
+    def insert(self, data):
+    # Compare the new value with the parent node
+        if self.data:
+            if data < self.data:
+                if self.left is None:
+                    self.left = Node(data, self.level + 1)
+                    if self.maxlevel < self.level + 1:
+                        self.maxlevel = self.level + 1
+                       
+                else:
+                    templevel = self.left.insert(data)
+                    if self.maxlevel < templevel:
+                        self.maxlevel = templevel
+                    
+            elif data > self.data:
+                if self.right is None:
+                    self.right = Node(data, self.level+1)
+                    if self.maxlevel < self.level+1:
+                        self.maxlevel = self.level+1
+                       
+                else:
+                    self.right.insert(data)
+                    if self.maxlevel < templevel:
+                        self.maxlevel = templevel
+                        
+        else:
+            self.data = data
+            
+        return self.maxlevel
+
+
+# Print the tree
+    def PrintTree(self):
+        if self.left:
+            self.left.PrintTree()
+        print(self.data),
+        if self.right:
+            self.right.PrintTree()
+            
+
+
+
+
+numLevels = 1
+tempLevel = 1
+
+
+def maxOfTwo(tempLevel):
+    global numLevels
+    if numLevels < tempLevel:
+        numLevels = tempLevel
+
+
+# Use the insert method to add nodes
+root = Node(12, 1)
+tempLevel = root.insert(6)
+
+
+maxOfTwo(tempLevel)
+
+tempLevel = root.insert(14)
+maxOfTwo(tempLevel)
+
+tempLevel = root.insert(3)
+maxOfTwo(tempLevel)
+
+tempLevel = root.insert(1)
+maxOfTwo(tempLevel)
+
+
+root.PrintTree()
+
+print ("Num Level = " + str(numLevels))
+
+print (f"Num of levels in power of 2: {str(2**numLevels)}")
+
+print (f"Max levels: {str(root.maxlevel)}")
+
+
+
+
+'''
+==========================================================================
+String incrementer
+
+def increment_string(strng):
+    
+    if strng == "" or strng is None:
+        return "1"
+
+    if strng.isdigit():
+        return str(int(strng) + 1).zfill(len(strng))  
+
+    i = len(strng) - 1
+
+    while strng[i].isdigit():
+        i -= 1
+    
+    if i == len(strng) - 1:
+        return strng + "1"
+    else:
+        dig = len(strng) - 1 - i
+        return strng[:i+1] + str(int(strng[i+1:]) + 1).zfill(dig)  
+'''
+
+
 '''
 ==========================================================================
 ROT13
@@ -28,14 +182,6 @@ def rot13(message):
     return resStr
 
 '''
-
-res = rot13("test")
-print(res)
-res = rot13("Test")
-print(res)
-
-
-
 
 '''
 ==========================================================================
