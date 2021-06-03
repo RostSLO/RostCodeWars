@@ -1,18 +1,478 @@
 
+'''
+# Binary tree
+
+class TreeNode:
+
+    def __init__(self, nodeVal, nodeLev):
+        self.left = None
+        self.right = None
+        self.val = nodeVal
+        self.level = nodeLev
+
+    def insertNode(self, nodeVal):
+        if self.val < nodeVal:
+            if self.right is None: self.right = TreeNode(nodeVal, self.level + 1)
+            else: self.right.insertNode(nodeVal)
+        else:
+            if self.left is None: self.left = TreeNode(nodeVal, self.level + 1)
+            else: self.left.insertNode(nodeVal)
+
+    def findNode(self, nodeVal):
+        if self.val:
+            if self.val == nodeVal: return self.level
+            elif self.val < nodeVal:
+                if self.right: level = self.right.findNode(nodeVal)
+                else: level = -1
+            else:
+                if self.left: level = self.left.findNode(nodeVal)
+                else: level = -1
+        else: level = -1
+
+        return level
+        
 
 
+tree = TreeNode(42, 0)
+tree.insertNode(15)
+tree.insertNode(5)
+tree.insertNode(55)
+tree.insertNode(75)
+tree.insertNode(25)
+tree.insertNode(35)
+tree.insertNode(37)
+findNodeValue = 5
+nodeLevel = tree.findNode(findNodeValue)
+print(f"Node {str(findNodeValue)} has level: {str(nodeLevel)}")
+'''
 
+'''
+# Linked List
+
+class Node:
+    data: int     
+    next = None
+    def __init__(self, data):
+        self.data = data  
+
+
+class LinkedList:
+    head = None       
+
+    def append(self, data):
+        if self.head != None:
+            item = self.head
+            while item.next != None:
+                item = item.next
+            item.next = Node(data)
+        else: self.head = Node(data)
+
+    def remove(self, data, all):
+        if self.head != None:
+        
+            if self.head.next == None:
+                if self.head.data == data: 
+                    self.head = None
+                    return
+                
+            item = self.head
+            while item.next != None:
+                if item.next.data == data:
+                    if item.next.next != None:
+                        item.next = item.next.next
+                    else: 
+                        item.next = None
+                        return
+                    if all == 0:
+                        return
+                item = item.next
+
+    def printLLElements(self):
+        if self.head != None:
+            item = self.head
+            while item.next != None:
+                print(f'{str(item.data)}-->')
+                item = item.next
+            print(f'{str(item.data)}-->')
+
+
+head = LinkedList()
+head.append(8)
+head.append(12)
+head.append(10)
+head.append(7)
+head.append(9)
+head.append(10)
+head.printLLElements()
+print('===================================')
+head.remove(10, 0)
+head.printLLElements()
+#4-->8-->12-->6
+'''
 
 
 '''
-res = zeros(15)
-print(str(res))
-res = zeros(18)
-print(str(res))
-res = zeros(19)
-print(str(res))
-res = zeros(20)
-print(str(res))
+==========================================================================
+Factorial
+
+def factorial(n):
+
+    nFactor = 0
+
+    if not isinstance(n, int): return 0
+    elif n < 0: nFactor = -1 * n
+    else: nFactor = n
+
+    resFactor = 1
+    for i in range(1, nFactor+1): resFactor *= i
+    return (resFactor * -1 if n < 0 and n%2 != 0 else resFactor)
+
+
+'''
+
+'''
+==========================================================================
+Simple Memory Manager
+
+class Node:
+    next = None
+    def __init__(self, nodeID, size):
+        self.nodeID = nodeID
+        self.data = [None]*size
+
+
+class MemoryManager:
+    
+    head = None
+    
+    def __init__(self, memory):
+        """
+        @constructor Creates a new memory manager for the provided array.
+        @param {memory} An array to use as the backing memory.
+        """
+        self.originMemory = len(memory)
+        self.availableMemory = len(memory)
+        self.memory = memory
+
+    def allocate(self, size):
+        """
+        Allocates a block of memory of requested size.
+        @param {number} size - The size of the block to allocate.
+        @returns {number} A pointer which is the index of the first location in the allocated block.
+        @raises If it is not possible to allocate a block of the requested size.
+        """
+        if size <= self.availableMemory:
+            if self.head == None:
+                self.head = Node(0, size)
+                self.memory[0:size] = self.head.data
+                self.availableMemory -= size
+                return 0
+            else:
+                if self.head.nodeID >= size:
+                    item = Node(0, size)
+                    self.memory[0:size] = item.data
+                    item.next = self.head.next
+                    self.head.next = item
+                    return 0
+                current = 0
+                item = self.head
+                current += len(item.data)
+                while item.next != None:
+                    if item.next.nodeID == current:  
+                        item = item.next
+                        current += len(item.data)
+                    else:
+                        if item.next.nodeID - current >= size:
+                            newItem = Node(current, size)
+                            self.memory[current:size] = newItem.data
+                            self.availableMemory -= size
+                            newItem.next = item.next
+                            item.next = newItem
+                            return current
+                        else:
+                            current += item.next.nodeID - current
+                            item = item.next
+                            current += len(item.data)                    
+                item.next = Node(current, size)
+                self.memory[current:size] = item.data
+                self.availableMemory -= size
+                return current
+        elif size > self.originMemory:
+            raise Exception("Cannot allocate more memory than exists")
+        else:
+            raise Exception("Cannot allocate more memory than available")
+                
+    def release(self, pointer):
+        """
+        Releases a previously allocated block of memory.
+        @param {number} pointer - The pointer to the block to release.
+        @raises If the pointer does not point to an allocated block.
+        """
+        if pointer >= 0 and pointer <= self.originMemory:
+            if pointer == 0 and self.head != None:
+                self.availableMemory += len(self.head.data)
+                for _ in range(self.head.nodeID, self.head.nodeID+len(self.head.data)-1):
+                    self.memory[_] = None
+                self.head = self.head.next
+            else:               
+                item = self.head
+                while item.next != None:
+                    if item.next.nodeID == pointer:
+                        self.availableMemory += len(item.next.data)
+                        for _ in range(item.next.nodeID, item.next.nodeID+len(item.next.data)-1):
+                            self.memory[_] = None
+                        if item.next.next != None: item.next = item.next.next
+                        else: item.next = None
+                        return
+                    item = item.next
+                return ("Pointer does not point to an allocated block")
+        else:
+            return ("Pointer does not point to an allocated block")
+
+
+
+    def read(self, pointer):
+        """
+        Reads the value at the location identified by pointer
+        @param {number} pointer - The location to read.
+        @returns {number} The value at that location.
+        @raises If pointer is in unallocated memory.
+        """
+        if self.head == None: raise Exception("No memory has been allocated")
+
+        if pointer >= 0 and pointer <= self.originMemory:
+            if pointer >= self.head.nodeID and pointer <= self.head.nodeID + len(self.head.data) - 1:
+                if self.head.data[pointer-self.head.nodeID] != None: return self.head.data[pointer-self.head.nodeID]
+                else: return None
+            else:
+                item = self.head
+                while item.next != None:
+                    if pointer >= item.next.nodeID and pointer <= item.next.nodeID + len(item.next.data) - 1:
+                        if item.next.data[pointer - item.next.nodeID]: return item.next.data[pointer - item.next.nodeID]
+                        else: return None
+                    item = item.next
+                raise Exception("No memory has been allocated")
+        else:
+            raise Exception("No memory has been allocated")
+
+
+    def write(self, pointer, value):
+        """
+        Writes a value to the location identified by pointer
+        @param {number} pointer - The location to write to.
+        @param {number} value - The value to write.
+        @raises If pointer is in unallocated memory.
+        """
+        if self.head == None: 
+            raise Exception("No memory has been allocated")
+
+        if pointer >= 0 and pointer <= self.originMemory:
+            if pointer >= self.head.nodeID and pointer <= self.head.nodeID + len(self.head.data) - 1:
+                self.head.data[pointer-self.head.nodeID] = value
+                self.memory[pointer] = value
+                return self.head.data
+            else:
+                item = self.head
+                while item.next != None:
+                    if pointer >= item.next.nodeID and pointer <= item.next.nodeID + len(item.next.data) - 1:
+                        item.next.data[pointer - item.next.nodeID] = value
+                        self.memory[pointer] = value
+                        return item.next.data
+                    item = item.next
+                raise Exception("No memory has been allocated")
+        else:
+            raise Exception("No memory has been allocated")
+
+
+#mem = MemoryManager([None] * 256)
+#res  = mem.allocate(512)
+#print(res)
+#pointer1 = mem.allocate(128)
+#print(str(pointer1))
+#res  = mem.allocate(129)
+#print(res)
+
+#mem = MemoryManager([None] * 64)
+#pointer1 = mem.allocate(32)
+#print(str(pointer1))
+#pointer2 = mem.allocate(32)
+#print(str(pointer2))
+#mem.release(pointer1)
+#pointer3 = mem.allocate(32)
+#print(str(pointer3))
+
+#mem = MemoryManager([None] * 64)
+#pointer1 = mem.allocate(16)
+#print(str(pointer1))
+#pointer2 = mem.allocate(16)
+#print(str(pointer2))
+#pointer3 = mem.allocate(16)
+#print(str(pointer3))
+#pointer4 = mem.allocate(16)
+#print(str(pointer4))
+#mem.release(pointer2)
+#mem.release(pointer3)
+#pointer5 = mem.allocate(36)
+#print(str(pointer5))
+
+a, b, c, d = 0, 1, 31, 32
+mem = MemoryManager([None] * 64)
+pointer1 = mem.allocate(32)
+print(str(pointer1))
+res = mem.write(pointer1, a)
+print(res)
+res = mem.write(pointer1 + b, b)
+print(res)
+res = mem.write(pointer1 + c, c)
+print(res)
+res = mem.write(pointer1 + d, d)
+print(res)
+
+#mem = MemoryManager([None] * 64)
+#res = mem.write(1,1)
+#print(res)
+
+#mem = MemoryManager([None] * 64)
+#res = mem.read(1)
+#print(res)
+
+#mem = MemoryManager([None] * 64)
+#pointer1 = mem.allocate(32)
+#print(str(pointer1))
+#res = mem.write(pointer1, 1)
+#print(res)
+#res = mem.read(pointer1)
+#print(res)
+#res = mem.read(pointer1 + 1)
+#print(res)
+'''
+
+'''
+from math import sqrt
+
+def list_squared(m, n):
+    
+    if m < 1 or n < 1 or m is None or n is None:
+        return []
+
+    resList = []
+    finalRes = []
+
+    if m == 1:
+        finalRes.append([1, 1])
+        m += 1
+
+    for i in range(m, n):
+        divider = 1
+        pairNum = i
+        resList.clear()
+        productDivider = 1
+
+        while divider <= pairNum:
+        
+            while pairNum % divider != 0:
+                divider += 1
+
+            if pairNum != divider:
+                pairNum = int(pairNum / divider)
+                productDivider *= divider
+                if pairNum > divider:
+                    resList.append(productDivider)
+                    if pairNum != divider: resList.append(i / productDivider)
+                divider = 2
+            elif len(resList) > 4: 
+                resList.append(divider * resList[2])
+                resList.append(i / (divider * resList[2]))
+                break
+            else:    
+                break
+
+        # square all dividers
+        resList = [num**2 for num in resList]
+
+        # summ all squares
+        sumNum = sum(resList)
+
+        #print(str(sumNum))
+
+        if sqrt(sumNum) - int(sqrt(sumNum)) == 0:
+            finalRes.append([i, int(sumNum)])            
+
+    return finalRes
+'''
+
+'''
+        42
+        / \
+       21  2
+       / \
+      7  3
+'''
+#res = list_squared(1, 250)
+#print(res)
+#res = list_squared(42, 250)
+#print(res)
+#res = list_squared(250, 500)
+#print(res)
+
+'''
+
+
+from math import sqrt
+
+def list_squared(m, n):
+    
+    if m < 1 or n < 1 or m is None or n is None:
+        return []
+
+    resList = []
+    finalRes = []
+    midNum = 0
+
+    if m == 1:
+        finalRes.append([1, 1])
+        m += 1
+
+    for i in range(m, n):
+        resList.clear()
+        lastDivider = i
+        primeNum = True
+        if i % 2 == 0: midNum = int(i / 2) 
+        elif i % 3 == 0: midNum = int(i / 3)
+        elif i % 5 == 0: midNum = int(i / 5)
+        elif i % 7 == 0: midNum = int(i / 7)
+        else: 
+            resList.append(1)
+            resList.append(i)
+        # find all divisers
+        for y in range(1, midNum + 1):
+            if y >= lastDivider:
+                break            
+            elif i % y == 0 and y <= lastDivider:
+                lastDivider = int(i / y)
+                resList.append(y)
+                if y != lastDivider: resList.append(lastDivider)
+            # validatino on the Prime number
+            #elif y > 7 and primeNum:
+            #    if len(resList) > 2:
+            #        primeNum = False
+            #    else: break
+
+        
+        # square all dividers
+        resList = [num**2 for num in resList]
+
+        # summ all squares
+        sumNum = sum(resList)
+
+        #print(str(sumNum))
+
+        if sqrt(sumNum) - int(sqrt(sumNum)) == 0:
+            finalRes.append([i, sumNum])
+
+
+    return finalRes
+
 '''
 
 '''
@@ -35,7 +495,8 @@ def zeros(n):
 '''
 
 
-
+'''
+==========================================================================
 #Binary Tree
 
 class Node:
@@ -126,7 +587,7 @@ print (f"Num of levels in power of 2: {str(2**numLevels)}")
 
 print (f"Max levels: {str(root.maxlevel)}")
 
-
+'''
 
 
 '''
