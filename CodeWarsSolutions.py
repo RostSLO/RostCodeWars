@@ -1,4 +1,331 @@
 
+
+
+
+'''
+def permutations(text):
+    
+    if text == '':
+        return []
+    
+    if len(text) == 1:
+        return [text]
+
+    perm = []
+
+    for i in range(len(text)):
+        ch = text[i]
+
+        tempList = text[:i] + text[i+1:]
+
+        for p in permutations(tempList):
+            perm.append([ch] + p)
+
+    return perm
+
+res = permutations(list('abc'))
+print(res)
+'''
+
+'''
+class Node:
+    inc = 0
+    def __init__(self, data, level):
+        self.data = data
+        self.level = level
+        self.left = None
+        self.right = None
+
+
+    def insert(self, data):
+        if self.data == None:
+            self.data = data
+        elif self.data == data:
+            raise "Element with such data point has already exists"
+        elif self.data > data:
+            if self.left == None:
+                self.left = Node(data, self.level + 1)
+            else: self.left.insert(data)
+        else:
+            if self.right == None:
+                self.right = Node(data, self.level + 1)
+            else: self.right.insert(data)
+
+    def traverse(self):
+        global inc
+        if self.data != None:
+            if self.left != None:
+                self.left.traverse()
+            inc += 1
+            print(' '*2 + str(self.data) + ' '*2 + str(inc))
+            if self.right != None:
+                self.right.traverse()
+
+
+root = Node(45, 0)
+root.insert(25)
+root.insert(15)
+root.insert(30)
+root.insert(20)
+root.insert(55)
+root.insert(65)
+root.insert(50)
+root.insert(40)
+root.insert(5)
+root.insert(75)
+root.insert(60)
+root.insert(52)
+
+root.traverse()
+
+'''
+
+
+
+
+
+
+
+
+
+
+
+'''
+base64 = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+def cypherBase64(number):
+
+    res = ''
+    
+    while number > 0:
+        i = number % len(base64)
+        res += base64[i]
+        number = number // len(base64)
+
+    res = res[::-1]
+    return res
+
+
+res = cypherBase64(5000000)
+print(res)
+'''
+
+
+'''
+#permutation - recursion
+
+# Python function to print permutations of a given list
+def permutation(lst):
+ 
+    # If lst is empty then
+    #    return []
+ 
+    # If there is only one element in lst then, only
+    # one permutation is possible
+    if len(lst) == 1:
+        return [lst]
+ 
+    # Find the permutations for lst if there are
+    # more than 1 characters
+ 
+    l = [] # empty list that will store current permutation
+ 
+    # Iterate the input(lst) and calculate the permutation
+    for i in range(len(lst)):
+       m = lst[i]
+ 
+       # Extract lst[i] or m from the list.  remLst is
+       # remaining list
+       remLst = lst[:i] + lst[i+1:]
+ 
+       # Generating all permutations where m is first
+       # element
+       for p in permutation(remLst):
+            l.append([m] + p)
+    return l
+ 
+ 
+# Driver program to test above function
+data = list('abc')
+res = permutation(data)
+print(res)
+
+#for p in permutation(data):
+#    print(p)
+'''
+
+
+
+
+
+
+'''
+class Node(object):
+    def __init__(self, data=None):
+        self.data = data
+        self.next = None
+
+def buildlist(head, item):
+
+    if head == None: return
+
+    if head.next == None: 
+        head.next = item
+        return
+    
+    element = head.next
+    end = head
+
+    while element.next != None:
+        buffer = element        
+        element = element.next
+        buffer.next = 
+        elemen
+    
+    element.next = item
+
+
+def reverse(head):
+    
+    if head == None: return ''
+
+    resList = []
+
+    item = head
+
+    while item.next != None:
+        resList.append(item.data)
+        item = item.next
+    resList.append(item.data)
+
+    resList = resList[::-1]
+
+    head = Node(resList[0])
+
+    for i in resList[1:]:
+        item = Node(i)
+        buildlist(head, item)
+
+        
+    #print(resList)
+    #print(' -> '.join(str(x) for x in resList[::-1]) + ' -> None.')
+    #return res
+
+
+
+
+res = reverse([1, 3, 8])
+print(res)
+# 3 -> 1 -> None
+
+'''
+
+'''
+Four Letter Words ~ Mutations
+
+
+
+
+def findWord(list, word):
+
+    for item in list:
+
+        if item[0] == word[0]:
+            if (item[1] == word[1] and item[2] == word[2] and item[3] != word[3]) or (item[1] == word[1] and item[2] != word[2] and item[3] == word[3]) or (item[1] != word[1] and item[2] == word[2] and item[3] == word[3]):
+                if item.count(item[0]) > 1 or item.count(item[1]) > 1 or item.count(item[2]) > 1: continue
+                else: return item
+        elif item[1:4] == word[1:4]:
+            if item.count(item[0]) > 1 or item.count(item[1]) > 1 or item.count(item[2]) > 1: continue
+            else: return item
+    return None
+
+
+def mutations(alice, bob, word, first):
+
+    if alice == None or bob == None or word == None or first < 0 or first > 1:
+        return None
+    aliceRes = bobRes = ' '
+    originAlice = alice.copy()
+    originBob = bob.copy()
+    if originAlice.count(word) > 0: originAlice.remove(word)
+    if originBob.count(word) > 0: originBob.remove(word)
+
+
+    while not (aliceRes == None and bobRes == None):
+        if first == 0:           
+            aliceRes = findWord(originAlice, word)
+            if aliceRes != None:
+                word = aliceRes
+                originAlice.remove(aliceRes)
+                if originBob.count(aliceRes) > 0: originBob.remove(aliceRes)
+                if bobRes == None: return 0
+            else:
+                if bobRes == ' ' : first  = 1
+                elif bobRes != None: return 1
+            first = 1
+        else:
+            bobRes = findWord(originBob, word)
+            if bobRes != None:
+                word = bobRes
+                originBob.remove(bobRes)
+                if originAlice.count(bobRes) > 0: originAlice.remove(bobRes)
+                if aliceRes == None: return 1
+            else:
+                if aliceRes == ' ' : first  = 0
+                elif aliceRes != None: return 0
+            first = 0
+                
+    return -1
+
+
+#res = findWord(['fear', 'fard'], 'farl')
+#print(res)
+
+alice = ['void', 'emyd', 'exes', 'lick', 'brrr', 'lira', 'koto', 'upon', 'dunk', 'wawl', 'keno', 'fuss', 'fine', 'rins', 'brae', 'drys', 'yuke', 'seif', 'slap', 'miso', 'mems', 'miss', 'warn', 'coot', 'molt', 'rhea', 'draw', 'stem', 'irks', 'oust', 'tirl', 'will', 'pams', 'owed', 'firm', 'ring', 'nine', 'kris', 'eche', 'lion', 'pass', 'duds', 'seek', 'snap', 'iglu', 'raft', 'wali', 'polk', 'byes', 'emeu', 'yeuk', 'vacs', 'wage', 'meed', 'dreg', 'moot', 'leer', 'tees', 'fief', 'curn', 'oryx', 'oyer', 'juco', 'echo', 'dors', 'doss', 'lent', 'dene', 'plus', 'ewer', 'feod', 'chis', 'miff', 'eely', 'tosh', 'huts', 'asci', 'menu', 'whew', 'dido', 'amir', 'kyar', 'over', 'sice', 'bree', 'yutz', 'mids', 'clot', 'foys', 'bibb', 'magi', 'sorn', 'barm', 'adze', 'hood', 'info', 'tuck', 'cess', 'doum', 'hajj', 'dame', 'cote', 'ours', 'tuis', 'rage', 'kaon', 'kaka', 'zeks', 'wing', 'typp', 'clog', 'inky', 'vera', 'asks', 'bort', 'gaud', 'belt', 'tips', 'rase', 'pics', 'vein', 'file', 'mott', 'time', 'hays', 'bitt', 'ands', 'clay', 'pled', 'weep', 'moue', 'tela', 'nark', 'bang', 'skin', 'lowe', 'lied', 'boar', 'nope', 'bema', 'joes', 'boom', 'edge', 'sigh', 'eave', 'trek', 'aril', 'pfui', 'nogs', 'kids', 'head', 'plop', 'alan', 'tori', 'gone', 'kyte', 'recs', 'ruga', 'erst', 'nota', 'keel', 'puff', 'quid', 'vina', 'pare', 'rods', 'pill', 'corn', 'mixt', 'enol', 'poem', 'sues', 'tour', 'leks', 'muds', 'kobs', 'rend', 'quey', 'yags', 'hwan', 'buns', 'bolo', 'pole', 'typy', 'alee', 'mold', 'viva', 'leak', 'gley', 'leva', 'weta', 'alfa', 'gibe', 'slum', 'harp', 'raze', 'anil', 'dabs', 'coil', 'peag', 'yews', 'redd', 'bide', 'goal', 'leno', 'dans', 'fuci', 'urus', 'burs', 'hops', 'visa', 'jagg', 'gray', 'pomp', 'raga', 'cage', 'easy', 'alas', 'huge', 'duce', 'sord', 'kain', 'oafs', 'mums', 'stye', 'gite', 'mair', 'wain', 'peat', 'dine', 'also', 'wisp', 'dart', 'wove', 'gowd', 'exit', 'fond', 'pods', 'tabu', 'inly', 'toll', 'buys', 'prig', 'mete', 'azan', 'luke', 'tets', 'ruse', 'sybo', 'hobs', 'zoic', 'bawl', 'call', 'hart', 'turn', 'mash', 'topo', 'oxen', 'juts', 'bice', 'fits', 'vena', 'odes', 'trug', 'croc', 'coft', 'rout', 'olid', 'name', 'flew', 'nard', 'paps', 'weet', 'chop', 'cons', 'drek', 'nets', 'babu', 'ruff', 'cute', 'pick', 'moms', 'owse', 'bozo', 'cuif', 'waft', 'imid', 'paca', 'jams', 'corf', 'jail', 'area', 'buds', 'tone', 'wees', 'coco', 'torr', 'rein', 'vans', 'pirn', 'tack', 'idyl', 'lido', 'qoph', 'koel', 'lire', 'aper', 'ouph', 'robs', 'rebs', 'whid', 'pegs', 'weft', 'wych', 'berk', 'fids', 'baud', 'toms', 'coys', 'okeh', 'soap', 'jiao', 'home', 'stow', 'mako', 'kemp', 'lids', 'hork', 'meme', 'soke', 'lies', 'lode', 'five', 'zany', 'lych', 'ukes', 'dull', 'boor', 'ware', 'ceps', 'shog', 'trow', 'mome', 'kame', 'tanh', 'dual', 'opah', 'pula', 'plea', 'quiz', 'rocs', 'hake', 'rubs', 'frog', 'naik', 'barf', 'hour', 'whit', 'lust', 'jess', 'rets', 'fons', 'lips', 'dhal', 'vega', 'calx', 'alef', 'brig', 'mews', 'sipe', 'urps', 'furs', 'luvs', 'ixia', 'rued', 'dune', 'meat', 'durn', 'oats', 'daze', 'flab', 'vier', 'stop', 'juga', 'urge', 'dyad', 'odea', 'eats', 'zerk', 'nape', 'tots', 'fash', 'unit', 'masa', 'ashy', 'mawn', 'duct', 'pain', 'womb', 'talk', 'leas', 'yard', 'larn', 'zees', 'tivy', 'suit', 'slot', 'stum', 'tyer', 'mole', 'sris', 'find', 'jade', 'dump', 'tune', 'joey', 'coif', 'rink', 'mopy', 'sacs', 'cuds', 'feal', 'lead', 'boot', 'itch', 'dele', 'inti', 'frug', 'naos', 'tahr', 'alit', 'owes', 'mint', 'feus', 'mugs', 'peas', 'fisk', 'hill', 'soys', 'acyl', 'shwa', 'thai', 'pond', 'whir', 'ires', 'otic', 'drow', 'carr', 'mart', 'june', 'jive', 'fund', 'moon', 'tidy', 'ilex', 'runt', 'sura', 'pome', 'karn', 'honk', 'hasp', 'dirk', 'eyra', 'thug', 'salp', 'bunk', 'luau', 'many', 'toro', 'awee', 'task', 'fiat', 'pies', 'scar', 'idly', 'cate', 'dues', 'didy', 'laid', 'obia', 'chef', 'beau', 'shiv', 'haws', 'rads', 'have', 'dopy', 'kith', 'jogs', 'dado', 'bien', 'orbs', 'cowl', 'kudu', 'baby', 'sall', 'tyro', 'loir', 'cero', 'rack', 'step', 'dace', 'khis', 'reel', 'loin', 'naan', 'kiln', 'wair', 'woks', 'durr', 'mono', 'pale', 'says', 'yoni', 'filo', 'murr', 'ears', 'bowl', 'olea', 'egos', 'soms', 'webs', 'puny', 'thro', 'welt', 'dray', 'ritz', 'hung', 'kadi', 'vise', 'knar', 'gibs', 'caky', 'leku', 'body', 'them', 'afar', 'vole', 'nary', 'laud', 'mony', 'term', 'very', 'wool', 'tell', 'cede', 'chid', 'raku', 'bool', 'ales', 'oots', 'sumo', 'plie', 'wabs', 'shim', 'udos', 'gore', 'rind', 'sups', 'nana', 'lift', 'coda', 'rely', 'flus', 'soar', 'stub', 'gnus', 'psst', 'skip', 'riot', 'cabs', 'roil', 'halo', 'glum', 'site', 'peri', 'beak', 'paik', 'mise', 'stob', 'hock', 'moss', 'saps', 'sine', 'bigs', 'dote', 'syph', 'weed', 'yams', 'fogs', 'camp', 'batt', 'trim', 'bust', 'brow', 'agar', 'ruin', 'slur', 'wadi', 'chit', 'ells', 'agha', 'germ', 'keys', 'ping', 'know', 'pork', 'mace', 'trap', 'rids', 'bren', 'paid', 'taco', 'kufi', 'rums', 'wauk', 'eggy', 'prez', 'virl', 'sear', 'bake', 'fowl', 'daps', 'gout', 'neon', 'wist', 'heme', 'rasp', 'lard', 'twig', 'oldy', 'jane', 'oils', 'hant', 'wads', 'room', 'shin', 'reis', 'yowe', 'icon', 'ares', 'lore', 'else', 'anis', 'yups', 'daff', 'noon', 'airt', 'ibex', 'peed', 'egis', 'ruck', 'arcs', 'swig', 'dere', 'biga', 'cosh', 'deny', 'orra', 'tame', 'teal', 'wyle', 'ayah', 'eaux', 'snye', 'thee', 'foin', 'sard', 'albs', 'gads', 'pile', 'vara', 'lens', 'yoks', 'runs', 'acne', 'vees', 'cart', 'mips', 'sway', 'gits', 'taro', 'kane', 'dogs', 'pial', 'acme', 'pray', 'take', 'gaby', 'lisp', 'anon', 'ebbs', 'lees', 'joke', 'chum', 'ages', 'mazy', 'owns', 'wows', 'hare', 'lits', 'frit', 'hems', 'envy', 'horn', 'gang', 'posh', 'mill', 'risk', 'juju', 'mabe', 'psis', 'gull', 'lieu', 'lewd', 'alme', 'sibb', 'lase', 'yaks', 'rimy', 'kibe', 'serf', 'dolt', 'loth', 'perp', 'libs', 'rems', 'vied', 'sagy', 'rims', 'loup', 'yolk', 'hols', 'hull', 'blog', 'fibs', 'berg', 'tows', 'tael', 'haul', 'holy', 'pail', 'homy', 'gled', 'yarn', 'swam', 'vang', 'nick', 'osar', 'modi', 'blip', 'kina', 'ates', 'bats', 'girl', 'muso', 'palp', 'kirn', 'fins', 'casa', 'vita', 'bosk', 'tape', 'caul', 'near', 'kvas', 'reds', 'veld', 'fugs', 'last', 'carb', 'agma', 'skua', 'lyse', 'halt', 'coup', 'teff', 'nada', 'oily', 'shea', 'ends', 'oars', 'soth', 'bock', 'bulk', 'sour', 'mons', 'ides', 'towy', 'marc', 'flex', 'hets', 'moil', 'dout', 'brut', 'went', 'wavy', 'grue', 'bath', 'areg', 'cels', 'bidi', 'toot', 'lory', 'wins', 'slab', 'quit', 'yirr', 'blub', 'legs', 'quai', 'vice', 'haaf', 'cloy', 'jeff', 'gelt', 'ilks', 'laws', 'corm', 'fems', 'pals', 'urns', 'burn', 'bulb', 'guar', 'aery', 'such', 'rigs', 'peel', 'hims', 'roup', 'slew', 'rusk', 'beam', 'zoea', 'gall', 'whoa', 'sirs', 'hear', 'eyer', 'hows', 'hams', 'gasp', 'gets', 'pool', 'spin', 'hoof', 'saws', 'fyke', 'jibe', 'lude', 'guns', 'peek', 'teak', 'load', 'minx', 'fats', 'delf', 'viga', 'dish', 'midi', 'dibs', 'roof', 'snot', 'loto', 'neve', 'seed', 'anew', 'fohn', 'forb', 'yaud', 'dins', 'bade', 'soma', 'diel', 'duns', 'wady', 'half', 'fume', 'taos', 'vasa', 'waif', 'baps', 'hind', 'sums', 'yobs', 'boat', 'lite', 'cops', 'tiro', 'jins', 'oozy', 'bize', 'zero', 'rhos', 'burr', 'hymn', 'maid', 'pish', 'klik', 'pity', 'kief', 'jump', 'stew', 'sips', 'inia', 'taps', 'yaff', 'haes', 'bids', 'ruth', 'tilt', 'dent', 'poxy', 'khet', 'ilia', 'note', 'poke', 'ursa', 'surd', 'cony', 'flue', 'cred', 'mare', 'fads', 'warp', 'ocas', 'boyo', 'thir', 'maim', 'khan', 'napa', 'lunt', 'ados', 'eyry', 'daks', 'demy', 'clew', 'zonk', 'pump', 'hogg', 'glom', 'pily', 'tels', 'keet', 'emus', 'wons', 'nome', 'meou', 'whee', 'whet', 'pong', 'esne', 'luna', 'swat', 'swab', 'leke', 'beet', 'foal', 'aals', 'cool', 'ague', 'malm', 'amok', 'safe', 'chon', 'opal', 'smew', 'jows', 'doms', 'blae', 'fame', 'tegs', 'shul', 'ebon', 'idea', 'away', 'ryas', 'data', 'shew', 'cant', 'goad', 'deet', 'heal', 'duma', 'lose', 'peer', 'culm', 'seas', 'flub', 'scop', 'gyro', 'cure', 'mumu', 'foot', 'milk', 'bush', 'pase', 'coni', 'noil']
+bob   = ['sook', 'cogs', 'anti', 'imam', 'moxa', 'lwei', 'zoom', 'giga', 'kays', 'odea', 'ends', 'bets', 'paws', 'caps', 'doat', 'rugs', 'skeg', 'toil', 'defi', 'shri', 'amie', 'veld', 'baff', 'koji', 'frat', 'nurl', 'plum', 'puns', 'more', 'chop', 'fear', 'deet', 'wore', 'hays', 'opus', 'pont', 'page', 'pant', 'amin', 'flir', 'sext', 'coco', 'tuts', 'beak', 'mend', 'goof', 'rolf', 'nosy', 'rush', 'bump', 'fuss', 'sing', 'mazy', 'fink', 'hewn', 'sees', 'hogg', 'swum', 'hahs', 'ream', 'hehs', 'surf', 'faze', 'bees', 'mise', 'beep', 'udon', 'rias', 'sorb', 'alae', 'pubs', 'goth', 'mule', 'moon', 'buds', 'band', 'corn', 'heal', 'hale', 'sika', 'sulk', 'goer', 'demy', 'cels', 'lump', 'rete', 'puls', 'mems', 'curd', 'carr', 'rimu', 'leis', 'saga', 'jack', 'bats', 'shoo', 'foes', 'hims', 'ocas', 'trio', 'expo', 'lulu', 'olid', 'sock', 'need', 'gown', 'soli', 'amen', 'doge', 'zonk', 'ooze', 'peed', 'silk', 'tete', 'eddy', 'holy', 'coky', 'feta', 'rink', 'cued', 'toad', 'pies', 'paca', 'find', 'prao', 'wyns', 'floe', 'burr', 'shoe', 'sels', 'hove', 'fled', 'osar', 'engs', 'eyas', 'bate', 'romp', 'rail', 'nota', 'calx', 'send', 'gulp', 'goal', 'zerk', 'fumy', 'refs', 'sawn', 'arco', 'laid', 'wens', 'bras', 'phon', 'dodo', 'hump', 'knop', 'fold', 'info', 'bots', 'owns', 'loos', 'corf', 'psis', 'rums', 'foal', 'arts', 'cyst', 'gaur', 'tyer', 'beam', 'flub', 'mode', 'rems', 'haku', 'segs', 'glue', 'folk', 'work', 'peri', 'mopy', 'glia', 'ride', 'yams', 'yutz', 'nave', 'tans', 'kata', 'cage', 'ovum', 'mart', 'defy', 'milk', 'kore', 'mail', 'paly', 'yawp', 'verd', 'wiry', 'hire', 'rhus', 'kens', 'home', 'wiss', 'reis', 'peke', 'effs', 'filo', 'gems', 'prau', 'glom', 'achy', 'rank', 'barb', 'apse', 'eros', 'cane', 'derv', 'kern', 'pose', 'jail', 'miry', 'hots', 'pits', 'ruly', 'kine', 'coni', 'undo', 'tars', 'mica', 'azan', 'ohia', 'fool', 'mint', 'aril', 'bedu', 'lisp', 'rate', 'hora', 'cigs', 'naik', 'cede', 'lice', 'race', 'drab', 'agon', 'kuru', 'kudo', 'dhow', 'mote', 'ands', 'rive', 'luge', 'oxen', 'nose', 'cult', 'deke', 'tree', 'piny', 'cuts', 'mums', 'gets', 'hurl', 'emyd', 'juco', 'muds', 'holp', 'mind', 'play', 'tyee', 'pouf', 'teen', 'tung', 'gaes', 'doxy', 'hern', 'rets', 'ebbs', 'abye', 'lakh', 'grow', 'heel', 'jagg', 'sipe', 'vied', 'dahl', 'dank', 'sibs', 'lamb', 'byre', 'lurk', 'drew', 'weep', 'tali', 'sics', 'yuck', 'earn', 'dido', 'duit', 'veal', 'thaw', 'gibs', 'vasa', 'bong', 'birr', 'vies', 'ahed', 'sith', 'rags', 'vile', 'tram', 'ursa', 'menu', 'blog', 'hike', 'raia', 'plie', 'yuga', 'oyes', 'york', 'hoax', 'vavs', 'gyve', 'soja', 'calf', 'halo', 'dins', 'pled', 'drow', 'vees', 'twit', 'when', 'jots', 'soys', 'comb', 'keps', 'sews', 'hard', 'weet', 'outs', 'masa', 'naps', 'kits', 'perk', 'jouk', 'fond', 'whid', 'horn', 'gold', 'upas', 'dite', 'abri', 'cord', 'ankh', 'pomp', 'kite', 'maul', 'doux', 'zoos', 'deni', 'rosy', 'kyat', 'into', 'earl', 'farm', 'gowk', 'viol', 'bawl', 'lich', 'coos', 'sago', 'apod', 'gust', 'skim', 'habu', 'yack', 'elhi', 'puja', 'oops', 'rich', 'towy', 'frau', 'awns', 'modi', 'aloe', 'tics', 'kune', 'days', 'plod', 'brut', 'glop', 'pams', 'boys', 'mays', 'army', 'rode', 'bash', 'stop', 'padi', 'lues', 'pome', 'tube', 'cove', 'aryl', 'ikon', 'envy', 'cosh', 'tubs', 'tora', 'mako', 'away', 'ward', 'clod', 'funk', 'apex', 'yodh', 'boos', 'pugh', 'bans', 'mayo', 'fess', 'eave', 'jeon', 'woes', 'brag', 'baal', 'sett', 'undy', 'bubs', 'gull', 'hoof', 'saws', 'acyl', 'luna', 'past', 'mura', 'gins', 'ains', 'moos', 'glut', 'boat', 'lima', 'ghis', 'fury', 'zags', 'limo', 'cedi', 'wist', 'abut', 'nevi', 'herd', 'blip', 'paps', 'odas', 'warm', 'bals', 'nada', 'vans', 'scry', 'dumb', 'hone', 'bola', 'wail', 'whin', 'ogam', 'idyl', 'slop', 'rede', 'pipy', 'hive', 'gain', 'stye', 'floc', 'moil', 'hors', 'edgy', 'phew', 'emus', 'lipe', 'soda', 'deck', 'reck', 'nana', 'macs', 'deer', 'jags', 'abys', 'fund', 'tyes', 'axle', 'mane', 'toes', 'tors', 'talc', 'knar', 'seem', 'gird', 'miri', 'scad', 'nubs', 'smog', 'pone', 'nolo', 'eves', 'brio', 'bads', 'lyre', 'eide', 'ragg', 'byte', 'tarp', 'etch', 'bins', 'cyme', 'warp', 'lamp', 'exit', 'salp', 'body', 'mews', 'rubs', 'racy', 'main', 'yelp', 'dona', 'boil', 'limb', 'toll', 'juga', 'rude', 'wish', 'aces', 'ashy', 'logs', 'sake', 'inby', 'sots', 'sets', 'fyce', 'thug', 'soot', 'bell', 'haps', 'meat', 'ones', 'drum', 'jess', 'mool', 'agar', 'bite', 'raja', 'aide', 'skew', 'plea', 'orle', 'wrap', 'souk', 'kips', 'udos', 'midi', 'birk', 'yech', 'sore', 'cast', 'seed', 'slim', 'bier', 'mock', 'mete', 'core', 'lums', 'cyma', 'yagi', 'hawk', 'pupa', 'vrow', 'faut', 'have', 'spam', 'cans', 'limn', 'gent', 'fast', 'melt', 'arvo', 'elmy', 'bree', 'temp', 'soms', 'none', 'robs', 'lins', 'side', 'cred', 'fado', 'glum', 'saul', 'year', 'poly', 'atop', 'rind', 'opal', 'afar', 'bise', 'razz', 'brig', 'sure', 'heat', 'palm', 'bane', 'life', 'curs', 'syce', 'dude', 'jane', 'pops', 'huge', 'dewy', 'onus', 'plex', 'webs', 'dawt', 'rack', 'lode', 'rifs', 'tuns', 'gamb', 'megs', 'legs', 'alec', 'wyes', 'roux', 'mell', 'qaid', 'lift', 'neat', 'murk', 'bias', 'maws', 'keno', 'copy', 'dibs', 'slid', 'post', 'raya', 'roto', 'kaif', 'simp', 'math', 'reek', 'gane', 'jarl', 'ptui', 'half', 'alms', 'cods', 'hake', 'mome', 'idle', 'nide', 'take', 'rock', 'sorn', 'blat', 'duff', 'neon', 'tola', 'gogo', 'yogi', 'gift', 'migg', 'elds', 'raps', 'tape', 'sial', 'agog', 'chaw', 'noms', 'taro', 'okas', 'meed', 'gaed', 'holk', 'mitt', 'helm', 'brat', 'plug', 'atma', 'lust', 'wali', 'nuns', 'burd', 'lehr', 'dunt', 'coot', 'alga', 'dreg', 'tink', 'crud', 'chap', 'fizz', 'wasp', 'paik', 'oped', 'ping', 'seal', 'sold', 'mown', 'trek', 'vids', 'kerf', 'kadi', 'oint', 'riff', 'dyer', 'dime', 'jigs', 'wild', 'moth', 'gaen', 'egis', 'pian', 'gang', 'mars', 'taps', 'firm', 'noun', 'uric', 'cols', 'yaud', 'book', 'cabs', 'nims', 'peat', 'luny', 'soap', 'urds', 'bead', 'shiv', 'door', 'ants', 'lake', 'kiln', 'wisp', 'sank', 'puke', 'papa', 'vole', 'pias', 'yipe', 'lids', 'gien', 'hwyl', 'teth', 'sade', 'crus', 'pull', 'sura', 'cone', 'card', 'naoi', 'meld', 'yegg', 'goas', 'seat', 'list', 'shew', 'raff', 'belt', 'acta', 'tilt', 'deny', 'tame', 'germ', 'doit', 'pass', 'syke', 'birl', 'teds', 'lowe', 'muso', 'lags', 'roll', 'rote', 'edit', 'thai', 'rare', 'drag', 'tost', 'toga', 'whim', 'mast', 'oast', 'hand', 'jeep', 'luma', 'wink', 'tide', 'bask', 'bumf', 'brie', 'toro', 'love', 'dure', 'mead', 'kane', 'geek', 'vatu', 'free', 'obas', 'umbo', 'skua', 'ring', 'crew', 'oral', 'bema', 'grok', 'difs', 'yare', 'demo', 'ceca', 'gite', 'crux', 'fend', 'wans', 'howf', 'odds', 'burg', 'vets', 'jaws', 'idea', 'last', 'naff', 'weed', 'buhr', 'bloc', 'alts', 'hade', 'joky', 'lewd', 'wash', 'twae', 'twos', 'hyps', 'daps', 'purl', 'yods', 'lain', 'left', 'whit', 'spew', 'song', 'orca', 'gapy', 'shmo', 'kaka', 'kemp', 'suks', 'harm', 'tonk', 'pacy', 'axil', 'yond', 'ruer', 'oath', 'yays', 'huic', 'mary', 'gabs', 'glow', 'fobs', 'thud', 'shin', 'bark', 'pyin', 'ceps', 'neve', 'ghat', 'tala', 'cleg', 'aahs', 'lost', 'fern', 'ante', 'bend', 'isms', 'pard', 'burp', 'enow', 'tuff', 'boss', 'nook', 'sang', 'gums', 'hods', 'gate', 'lory', 'gybe', 'hobo', 'taos', 'raws', 'neuk', 'carn', 'brim', 'cloy', 'mobs', 'gasp', 'skid', 'mics', 'bods', 'juku', 'jazz', 'blur', 'kois', 'zoea', 'inly', 'feel', 'leat', 'riot', 'teas', 'type', 'zona', 'rill', 'swat', 'cars', 'prop', 'mump', 'rods', 'gnar', 'mads', 'guts', 'byes', 'peon', 'logo', 'ecru', 'bidi', 'late', 'vena', 'fief', 'wean', 'chew', 'frug', 'fops', 'gobs', 'damp', 'grin', 'firn', 'moot', 'digs', 'coss', 'tads', 'taco', 'tule', 'wack', 'tiny', 'rout', 'dolt', 'tine', 'gosh', 'pung', 'ship', 'fido', 'muon', 'jimp', 'lall', 'obit', 'does', 'kids', 'repp', 'kaki', 'phis', 'ragi', 'nibs', 'bosk', 'navy', 'burn', 'fade', 'tace', 'prof', 'eyry', 'vane', 'moll', 'duck', 'coal', 'nerd', 'clad', 'clue', 'kifs', 'hips', 'lawn', 'virl', 'bays', 'note', 'loth', 'wads', 'slug', 'bris', 'sord', 'rend', 'nine', 'keys', 'glug']
+
+res = mutations(alice, bob, "ptui", 0)
+print(str(res))
+
+'''
+'''
+class TreeNode:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+    def insert(self, data):
+        if self.data is None:
+            self.data = data
+            return    
+        elif self.data > data:
+            if self.left is None: self.left = TreeNode(data)
+            else: self.left.insert(data)
+        else:
+            if self.right is None: self.right = TreeNode(data)
+            else: self.right.insert(data)          
+
+
+def complete_binary_tree(a):
+    
+    for item in a:
+        insert()
+    
+
+
+res = complete_binary_tree([1])
+print(res)
+res = complete_binary_tree([1, 2, 3, 4, 5, 6])
+print(res)
+res = complete_binary_tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+print(res)
+res = complete_binary_tree([6, 3, 8, 1, 5, 7, 9, 0, 2, 4])
+print(res)
+
+'''
+
+
 '''
 # Binary tree
 
@@ -30,7 +357,14 @@ class TreeNode:
         else: level = -1
 
         return level
-        
+
+    def traverseLefttoRight(self):
+        if self.val:
+            if self.left != None:
+                self.left.traverseLefttoRight()
+            print (str(self.val))
+            if self.right != None:
+                self.right.traverseLefttoRight()
 
 
 tree = TreeNode(42, 0)
@@ -41,13 +375,43 @@ tree.insertNode(75)
 tree.insertNode(25)
 tree.insertNode(35)
 tree.insertNode(37)
-findNodeValue = 5
-nodeLevel = tree.findNode(findNodeValue)
-print(f"Node {str(findNodeValue)} has level: {str(nodeLevel)}")
+#findNodeValue = 55
+#nodeLevel = tree.findNode(findNodeValue)
+#print(f"Node {str(findNodeValue)} has level: {str(nodeLevel)}")
+
+tree.traverseLefttoRight()
+
 '''
 
 '''
-# Linked List
+==========================================================================
+Find amplitude of a binary tree
+
+class Tree(object):
+  
+  def __init__(self, data, left=None, right=None):
+    self.data = data
+    self.left = left
+    self.right = right
+
+def tree_amplitude(root_node, firstTime=[]):
+# Your solution
+    if root_node is None:
+        return max(firstTime) - min(firstTime) if len(firstTime) > 0 else 0
+    
+    left = tree_amplitude(root_node.left, firstTime + [root_node.data])
+    right =  tree_amplitude(root_node.right, firstTime + [root_node.data])
+    return max(left, right)
+
+res = tree_amplitude(Tree(5, Tree(1), Tree(3)))
+print(str(res))
+res = tree_amplitude(Tree(-5, Tree(-20), Tree(3, Tree(-1, None, Tree(88)), Tree(33)),))
+print(str(res))
+'''
+
+'''
+==========================================================================
+Linked List
 
 class Node:
     data: int     
@@ -1883,5 +2247,6 @@ def is_interesting(number, awesome_phrases):
 '''
 ==========================================================================
 NAME
+
 
 '''
