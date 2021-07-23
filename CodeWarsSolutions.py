@@ -1,40 +1,147 @@
 
 
 
+# Given a binary tree, please implement an Iterator for inorder traversal.
+
+# class BTInorderIterator {
+#    boolean hasNext()
+#    Node next()
+
+
+
+#              1
+#        2           3
+#    4       5
+
+# BTInorderIterator()
+# hasnext() 
+# next() 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Given a binary tree, please implement an Iterator for inorder traversal.
+
+class BTInorderIterator {
+    boolean hasNext();
+    Node next();
+    inorderList = []
+    resList = []
+    
+    
+    def __init__(self, tree):
+        self.tree = tree
+        resList = traverse
+
+
+    def hasnext(self, currentNode):
+        # return boolean
+        if self.currentNode.data == resList[len(resList)-1]:
+            retrun False
+        else: return True
+           
+    
+    
+    def next(self, currentNode):
+        # return the node
+        
+        for i in range(len(resList)):
+            if currenNode.data == resList[i]:
+                if  i == len(resList)-1:
+                    return None
+                else: return resList[i+1]
+                
+        
+    
+  
+    def traverse(self):
+        if self.left != None:
+            self.left.traverse
+        inorderList.append(self.data)
+        return inorderList
+        if self.right != None:
+            self.righ.traverse
+    
+}
+    
+# building the tree
+tree = Tree(1)
+...
+
+
+btIterator = BTInorderIterator(tree)
+isNextExist = btIterator.hasnext(node) # should return is exist or not
+nextNode = btIterator.next(node) # return data for the next item not NODE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 '''
-def permutations(text):
-    
-    if text == '':
+def permutation(lst):
+    print(lst)
+
+    if lst == None:
         return []
-    
-    if len(text) == 1:
-        return [text]
 
-    perm = []
+    if len(lst) == 1:
+        return [lst]
 
-    for i in range(len(text)):
-        ch = text[i]
+    permList = []
 
-        tempList = text[:i] + text[i+1:]
+    for i in range(len(lst)):
+        oneChar = lst[i]
 
-        for p in permutations(tempList):
-            perm.append([ch] + p)
+        tempList = lst[:i] + lst[i+1:]
 
-    return perm
+        for p in permutation(tempList):
+            permList.append([oneChar] + p)
 
-res = permutations(list('abc'))
+    return permList
+
+data = 'abc'
+
+res = permutation(list(data))
 print(res)
-'''
 
 '''
+
+
+
 class Node:
     inc = 0
     def __init__(self, data, level):
-        self.data = data
-        self.level = level
-        self.left = None
-        self.right = None
+        if isinstance(data, int):
+            self.data = data
+            self.level = level
+            self.left = None
+            self.right = None
+        else: raise ValueError('Node value should be integer')
+
 
 
     def insert(self, data):
@@ -51,20 +158,28 @@ class Node:
                 self.right = Node(data, self.level + 1)
             else: self.right.insert(data)
 
-    def traverse(self):
-        global inc
-        if self.data != None:
-            if self.left != None:
-                self.left.traverse()
-            inc += 1
-            print(' '*2 + str(self.data) + ' '*2 + str(inc))
-            if self.right != None:
-                self.right.traverse()
+    def traverseInOrder(self):
+        if self.left != None:
+            self.left.traverseInOrder()
+        print(str(self.data))
+        if self.right != None:
+            self.right.traverseInOrder()
+
+    def traversePreOrder(self):
+        if self.left != None:
+            self.left.traversePreOrder()
+        if self.right != None:
+            self.right.traversePreOrder()
+        print(self.data)
 
 
+root = Node('text', 0)
+print(root)
+
+'''
 root = Node(45, 0)
 root.insert(25)
-root.insert(15)
+root.insert(15) 
 root.insert(30)
 root.insert(20)
 root.insert(55)
@@ -76,9 +191,9 @@ root.insert(75)
 root.insert(60)
 root.insert(52)
 
-root.traverse()
-
+root.traversePreOrder()
 '''
+
 
 
 
