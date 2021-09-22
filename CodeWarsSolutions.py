@@ -33,7 +33,7 @@
 
 
 
-# Given a binary tree, please implement an Iterator for inorder traversal.
+# Given a binary tree, please implement an Iterator for inorder traversal
 
 class BTInorderIterator {
     boolean hasNext();
