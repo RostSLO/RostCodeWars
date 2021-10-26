@@ -32,7 +32,7 @@
 
 
 
-
+'''
 # Given a binary tree, please implement an Iterator for inorder traversal
 
 class BTInorderIterator {
@@ -44,7 +44,7 @@ class BTInorderIterator {
     
     def __init__(self, tree):
         self.tree = tree
-        resList = traverse
+        resList = self.traverse
 
 
     def hasnext(self, currentNode):
@@ -87,7 +87,7 @@ isNextExist = btIterator.hasnext(node) # should return is exist or not
 nextNode = btIterator.next(node) # return data for the next item not NODE
 
 
-
+'''
 
 
 
