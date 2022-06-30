@@ -1,7 +1,69 @@
 
 
 
-# Given a binary tree, please implement an Iterator for inorder traversal.
+'''
+def changeAtoB(arr, a, b):
+    inc = 0
+    for i in arr:
+        if a in str(i) or b in str(i): 
+            arr[inc] = int(str(i).replace(a,'x').replace(b, a).replace('x', b))
+        inc += 1
+    return arr
+
+
+def sort_twisted37(arr):
+    revertArr = arr
+    revertArr = changeAtoB(revertArr, "3", "7")
+    revertArr.sort()
+    return changeAtoB(revertArr, "7", "3")
+
+
+
+def likes(names):
+    l = len(names)
+    res = ""
+    if l == 0:
+        res = "no one likes this"
+    elif l > 0 and l < 4:
+        if l == 1:
+            res = names[0] + " likes this"    
+        elif l == 2:
+            res = names[0] + " and " + names[1] + " like this"
+        else: res = names[0] + ", " + names[1] + " and " + names[2] + " like this"
+    else:
+        res = names[0] + ", " + names[1] + " and " + str(l - 2) + " others like this"
+
+    return res
+'''
+
+
+def find_uniq(arr):
+    res = {}
+    n = 0
+    newList = []
+    for i in arr:
+        res[i] = arr.count(i)
+
+    newList = list(res)
+
+    n = (newList[1] if res.get(newList[0]) > 1 else newList[0])
+
+    #print(res)
+    
+    return n   # n: unique number in the array
+
+#testList = likes([])
+print(find_uniq([ 1, 1, 1, 2, 1, 1 ]))
+#testList = likes(['Peter'])
+print(find_uniq([ 0, 0, 0.55, 0, 0 ]))
+#testList = likes(['Jacob', 'Alex'])
+print(find_uniq([ 3, 10, 3, 3, 3 ]))
+#testList = likes(['Max', 'John', 'Mark'])
+#rint(testList)
+#testList = likes(['Alex', 'Jacob', 'Mark', 'Max'])
+#print(testList)
+
+#  Given a binary tree, please implement an Iterator for inorder traversal.
 
 # class BTInorderIterator {
 #    boolean hasNext()
@@ -131,7 +193,7 @@ print(res)
 '''
 
 
-
+'''
 class Node:
     inc = 0
     def __init__(self, data, level):
@@ -177,6 +239,7 @@ root = Node('text', 0)
 print(root)
 
 '''
+'''
 root = Node(45, 0)
 root.insert(25)
 root.insert(15) 
@@ -192,6 +255,7 @@ root.insert(60)
 root.insert(52)
 
 root.traversePreOrder()
+
 '''
 
 
