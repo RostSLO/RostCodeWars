@@ -2,6 +2,211 @@
 
 
 '''
+def strip_comments(strng, markers):
+    print(strng)
+    strng = strng.replace("\n", "\n ")
+    for i in range(len(markers)):
+        strng = strng.replace(markers[i], markers[i]+' ')
+
+    l = list(strng.split(' '))
+
+    print(l)
+
+    for s in range(len(markers)):
+        i = -1
+        if markers[s] in l:
+            i = l.index(markers[s])
+            if s == 0:
+                empty = True
+                for j in range(0, i):
+                    if l[j] not in ('', '\n', '\t'):
+                        empty = False
+                        break
+                if empty: l = l[i-1:len(l)]
+            count = l.count(markers[s])
+            for j in range (0, count):
+                if markers[s] in l: 
+                    i = l.index(markers[s])
+                    for w in range(i, len(l)):
+                        if "\n" in l[w]:
+                            l = l[0:i] + ['\n'] + l[w+1:len(l)]
+                            print(l)
+                            break
+                        elif w == len(l)-1:
+                            l = l[0:i]
+                            print(l)
+
+    for i in range(len(l)-1):
+        if "\n" != l[i+1] and "\n" not in l[i]:
+            l[i] = l[i] + ' '
+
+    print(l)
+    return ''.join( x for x in l )    
+
+'''
+
+def strip_comments(strng, markers):
+    print(strng)
+
+    iter = 0
+    i = 0
+
+    while iter >= 0:
+        if i < len(strng):
+            if strng[i] in markers:
+                if strng[0:i] == " ": strng.lstrip()
+                if strng.index('\n'):
+                    strng = strng[0:i] + strng[strng.index('\n'):len(strng)]
+                    print(strng)
+            else: i += 1  
+        else: iter = -1
+    
+    return True
+
+print(strip_comments("  # lemons avocados\nlemons , ' @ apples\n# ? apples ,\n# apples =", ["#", '-', '#'])) #', !'
+#print(strip_comments('a #b\nc\nd $e f g', ['#', '$']))
+#print(strip_comments(' a #b\nc\nd $e f g', ['#', '$']))
+#print(next_bigger(414))
+#print(next_bigger(144))
+#print(first_non_repeating_letter('aa'))
+#print(first_non_repeating_letter('~><#~><'))
+#print(first_non_repeating_letter('sTreSS'))
+#print(first_non_repeating_letter('Go hang a salami, I\'m a lasagna hog!'))
+
+
+
+'''
+def validate(l):
+    
+    for r in l:
+        for i in r:
+            if l[0].count(i) + l[1].count(i) + l[2].count(i)  > 1: return False   
+
+    return True 
+
+
+
+def valid_solution(board):
+    
+    n = 9
+
+    #check zeroes and rows
+    for l in board:
+        if l.count(0) > 0: return False
+        for i in l:
+            if l.count(i) > 1: return False
+        
+    #check columns
+    transposedList = [list(i) for i in zip(*board)]
+    for l in transposedList:
+        for i in l:
+            if l.count(i) > 1: return False
+
+    subList = []
+    l = []
+    for v in range(0, 9, 3):
+        for h in range(0, 9, 3):
+            for i in range(v, v+3):
+                l.append(board[i][h])
+                l.append(board[i][h+1])
+                l.append(board[i][h+2])
+                subList.append(l)
+                l = []
+            print(subList)  
+            if not validate(subList): return False
+            subList = []
+
+    return True
+
+'''
+'''
+    for i in range(len(s), 0, -1):
+        c = s[i - 1: i]
+        s1 = s[:i-1]
+        s2 = s[i:len(s)]
+        newStr = s1 + s2        
+        for j in range(len(newStr)+1):
+            sTemp = newStr[0:j] + c + newStr[j:len(newStr)]
+            #if resList.count(int(sTemp)) == 0:
+            resList.append(int(sTemp))
+        if ind > 1:
+            ind -= 1
+
+            permutation( , sTemp, ind)
+
+def permutation(s, d):
+
+    global depth
+
+    # If lst is empty then there are no permutations
+    if len(s) == 0:
+        return []
+ 
+    # If there is only one element in lst then, only
+    # one permutation is possible
+    if len(s) == 1:
+        return [s]
+
+
+    l = [] # empty list that will store current permutation
+ 
+    # Iterate the input(lst) and calculate the permutation
+    for i in range(len(s)):
+        m = s[i]
+        
+        # Extract lst[i] or m from the list.  remLst is
+        # remaining list
+        remLst = s[:i] + s[i+1:]
+    
+        # Generating all permutations where m is first
+        # element
+
+        for p in permutation(remLst, depth):
+            depth += 1
+            #l.append([m] + p)
+            if d == 0 and int(m + p) > int(s):
+                l.append(m + p)
+            elif d != 0: l.append(m + p)
+
+    return l
+
+depth = 0
+
+def next_bigger(n):
+    
+    if n <= 10: return -1
+
+    s = str(n)
+    #finalList = []
+    delta = -1
+    res = -1
+
+    for p in permutation(s, 0):
+        #finalList.append(int(''.join(c for c in p)))
+        print(p)
+        #num = int(p)
+        #num = int(''.join(c for c in p))
+        #print(str(num))
+        if int(p) > n:
+            if delta == -1: 
+                res = int(p)
+                delta = int(p) - n 
+            elif int(p) - n < delta: 
+                res = int(p)
+                delta = int(p) - n
+    
+    #finalList.sort()
+
+    #for i in finalList:
+    #    if i > n: return i
+
+    return "result = " + str(res)
+
+#1. Make all permutations of possible numbers
+#2. Sort them
+#3. find the first that is bigger than the input
+
+
 def changeAtoB(arr, a, b):
     inc = 0
     for i in arr:
@@ -34,34 +239,270 @@ def likes(names):
         res = names[0] + ", " + names[1] + " and " + str(l - 2) + " others like this"
 
     return res
-'''
 
 
 def find_uniq(arr):
-    res = {}
-    n = 0
-    newList = []
-    for i in arr:
-        res[i] = arr.count(i)
 
-    newList = list(res)
-
-    n = (newList[1] if res.get(newList[0]) > 1 else newList[0])
-
-    #print(res)
+    if arr[0] == arr[1] or arr[0] == arr[2]: n = arr[0] 
+    else: n = arr[1]
     
+    newSet = set(arr)
+    newList = list(newSet)
+
+    n = (newList[1] if newList[0] == n else newList[0])
+
     return n   # n: unique number in the array
 
-#testList = likes([])
-print(find_uniq([ 1, 1, 1, 2, 1, 1 ]))
-#testList = likes(['Peter'])
-print(find_uniq([ 0, 0, 0.55, 0, 0 ]))
-#testList = likes(['Jacob', 'Alex'])
-print(find_uniq([ 3, 10, 3, 3, 3 ]))
-#testList = likes(['Max', 'John', 'Mark'])
-#rint(testList)
-#testList = likes(['Alex', 'Jacob', 'Mark', 'Max'])
-#print(testList)
+
+
+def find_missing_letter(chars):
+    
+    upperBool = False
+    res = 'empty'
+
+    alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q','r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+    if chars[0].isupper():
+        upperBool = True
+    
+    if upperBool:
+        for i in range(len(chars)-1):
+            chars[i] = chars[i].lower()
+
+    index = alphabet.index(chars[0])
+
+    i = 0
+    while chars[i] == alphabet[index]:
+        index +=1
+        i += 1 
+
+    res = (alphabet[index].upper() if upperBool else alphabet[index])
+    
+    return res
+
+
+
+def narcissistic( value ):
+    # Code away
+    res = True
+    num = 0
+
+    sValue = str(value)
+    l = len(sValue)
+    for s in sValue:
+        num += int(s)**l
+
+    res = (True if num == value else False )
+    return res
+
+'''
+'''
+def zero(): #your code here
+def one(): #your code here
+def two(): #your code here
+def three(): #your code here
+def four(): #your code here
+def five(): #your code here
+def six(): #your code here
+def seven(): #your code here
+def eight(): #your code here
+def nine(): #your code here
+
+def plus(): #your code here
+def minus(): #your code here
+def times(): #your code here
+def divided_by(): #your code here
+
+def zero(*func):
+    if len(func) == 0: return 0
+    else: return operation(func, 0)
+
+def one(*func):
+    if len(func) == 0: return 1
+    else: return operation(func, 1)
+
+def two(*func):
+    if len(func) == 0: return 2
+    else: return operation(func, 2)
+
+def three(*func):
+    if len(func) == 0: return 3
+    else: return operation(func, 3)
+
+def four(*func):
+    if len(func) == 0: return 4
+    else: return operation(func, 4)
+
+def five(*func):
+    if len(func) == 0: return 5
+    else: return operation(func, 5)
+
+def six(*func):
+    if len(func) == 0: return 6
+    else: return operation(func, 6)
+
+def seven(*func):
+    if len(func) == 0: return 7
+    else: return operation(func, 7)
+
+def eight(*func):
+    if len(func) == 0: return 8
+    else: return operation(func, 8)
+
+def nine(*func):
+    if len(func) == 0: return 9
+    else: return operation(func, 9)
+
+def plus(num):
+    return str(num) + '+'
+def minus(num):
+    return str(num) + '-'
+def times(num):
+    return str(num) + '*'
+def divided_by(num):
+    return str(num) + '/'
+
+def operation(func, num1):
+    funcRes = func[0]
+    sign = funcRes[-1]
+    num2 = int(funcRes[0:len(funcRes)-1])
+    if sign == '*': return num1 * num2
+    elif sign == '+': return num1 + num2
+    elif sign == '-': return num1 - num2
+    else: return int(num1 / num2)
+
+def round(num):
+    return (num if num >= 0 and num <= 255 else (0 if num < 0 else 255))
+    
+def rgb(r, g, b):
+    
+    r = round(r)
+    g = round(g)
+    b = round(b)
+
+    return (hex(r)[0] + hex(r)[2] if len(hex(r)) < 4 else hex(r)[2] + hex(r)[3]).upper() + (hex(g)[0] + hex(g)[2] if len(hex(g)) < 4 else hex(g)[2] + hex(g)[3]).upper() + (hex(b)[0] + hex(b)[2] if len(hex(b)) < 4 else hex(b)[2] + hex(b)[3]).upper()
+
+
+def productFib(prod):
+    a = 0
+    b = 1
+
+    while a * b < prod:
+        c = a + b
+        a = b
+        b = c
+
+
+    return ([a, b, True] if a * b == prod else [a, b, False])
+
+
+def generate_hashtag(s):
+    
+    word = False
+    l = list(s)
+    for i in range(len(l)):
+        if l[i] != ' ' and not word:
+            l[i] = l[i].upper()
+            word = True
+        elif l[i] != ' ' and l[i].isupper():
+            l[i] = l[i].lower()
+        elif l[i] == ' ':
+            word = False
+
+    s = ''.join(l)
+    return ("#" + s.replace(' ', '') if s != '' and len(s) <= 140 else False)
+
+def first_non_repeating_letter(string):
+    
+    sLower = string.lower()
+
+    for i in range(len(string)):
+        if sLower.count(sLower[i]) == 1:
+            return string[i]    
+    
+    return ''
+
+
+
+def domain_name(url):
+    
+    s = url.replace('http://', '').replace('https://', '').replace('www.', '')
+    s_string = s.split('.', 1)
+    return s_string[0]
+
+
+
+def score(dice):
+    
+    res = 0
+    triple = 0
+    dict = {k:dice.count(k) for k in dice}
+
+    for key in dict:
+        if dict[key] >= 3:
+            res += (key*100 if key !=1 else 1000)
+            if key in (1, 5): triple = 3
+            
+        if key in (1, 5): res += ((dict[key]-triple)*50 if key != 1 else (dict[key]-triple)*100)
+
+    return res
+
+    #print(dict)
+
+
+
+def string(dict):
+    keys = list(dict)
+
+    s = "" if dict[keys[0]] == 0 else ("1 second" if dict[keys[0]] == 1 else "{} seconds".format(dict[keys[0]]))
+    m = "" if dict[keys[1]] == 0 else ("1 minute" if dict[keys[1]] == 1 else "{} minutes".format(dict[keys[1]]))
+    joint = " and " if m != '' and s == '' else (", " if m != '' else '')
+    h = "" if dict[keys[2]] == 0 else ("1 hour" + joint if dict[keys[2]] == 1 else "{} hours".format(dict[keys[2]]) + joint)
+    joint = ", " if h != '' or m != '' else ''
+    d = "" if dict[keys[3]] == 0 else ("1 day" + joint if dict[keys[3]] == 1 else "{} days".format(dict[keys[3]]) + joint)
+    joint = ", " if d!= '' or h != '' or m != '' else ''
+    y = "" if dict[keys[4]] == 0 else ("1 year" + joint if dict[keys[4]] == 1 else "{} years".format(dict[keys[4]]) + joint)
+    joint = " and " if s != '' and (m != '' or h != '' or d != '' or y != '') else ''
+ 
+    return y + d + h + m + joint + s
+
+
+def format_duration(seconds):
+    
+    if seconds == 0: return "now"
+    else:
+        res = {'s': 0, 'm': 0, 'h': 0, 'd': 0, 'y': 0}
+        duration = 's'
+        num = seconds
+        i = 0
+        keys = list(res)
+        coeff = 60
+
+        while duration != '':
+            if duration =='s':
+                coeff = 60
+            if duration == 'm':
+                coeff = 60
+            elif duration == 'h':
+                coeff = 24
+            elif duration == 'd':
+                coeff = 365
+
+            rem = num//coeff
+            if rem > 0: duration = keys[i+1] 
+            else: duration = ''
+
+            res[keys[i]] = num - rem*coeff
+            if duration == 'y': 
+                res[keys[i+1]] = rem
+                duration = ''
+            i += 1
+            num = rem
+
+    return string(res)
+ 
+'''
+
 
 #  Given a binary tree, please implement an Iterator for inorder traversal.
 
