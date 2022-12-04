@@ -1,7 +1,41 @@
 
 
+def move_zeros(lst):
+    
+    newLst = [x for x in lst if x != 0] + [x for x in lst if x == 0]
+
+    return newLst
+
+
+
+print(move_zeros([1, 2, 0, 1, 0, 1, 0, 3, 0, 1]))
+print(move_zeros([9, 0, 0, 9, 1, 2, 0, 1, 0, 1, 0, 3, 0, 1, 9, 0, 0, 0, 0, 9]))
+print(move_zeros([0, 0]))
+print(move_zeros([0]))
+print(move_zeros([]))
+
+
+
 
 '''
+def perimeter(n):
+    
+    last = new = res = 1
+    final = 2
+    
+    #find the sum of 1 side from all rectangels
+    if n > 0:
+        for i in range(1, n):
+            res = res + last
+            last = new
+            new = res
+            final = final + res
+
+    else: final = 1
+    
+    return str(4*final)
+
+
 def strip_comments(strng, markers):
     print(strng)
     strng = strng.replace("\n", "\n ")
@@ -43,39 +77,36 @@ def strip_comments(strng, markers):
     print(l)
     return ''.join( x for x in l )    
 
-'''
 
 def strip_comments(strng, markers):
-    print(strng)
-
     iter = 0
     i = 0
+    l = []
 
     while iter >= 0:
         if i < len(strng):
+            s = strng[i]
             if strng[i] in markers:
-                if strng[0:i] == " ": strng.lstrip()
-                if strng.index('\n'):
-                    strng = strng[0:i] + strng[strng.index('\n'):len(strng)]
-                    print(strng)
-            else: i += 1  
+                j = i
+                while j < len(strng) - 1:
+                    j += 1
+                    if strng[j] == '\n': 
+                        strng = strng[0:i] + strng[j:len(strng)]
+                        j = len(strng) + 2
+                if j == len(strng)-1:
+                    strng = strng[0:i]
+                i += 1
+            else: i += 1
         else: iter = -1
     
-    return True
-
-print(strip_comments("  # lemons avocados\nlemons , ' @ apples\n# ? apples ,\n# apples =", ["#", '-', '#'])) #', !'
-#print(strip_comments('a #b\nc\nd $e f g', ['#', '$']))
-#print(strip_comments(' a #b\nc\nd $e f g', ['#', '$']))
-#print(next_bigger(414))
-#print(next_bigger(144))
-#print(first_non_repeating_letter('aa'))
-#print(first_non_repeating_letter('~><#~><'))
-#print(first_non_repeating_letter('sTreSS'))
-#print(first_non_repeating_letter('Go hang a salami, I\'m a lasagna hog!'))
+    l = strng.split('\n')
+    
+    res = '\n'.join(x.rstrip() for x in l)
+    
+    return res
 
 
 
-'''
 def validate(l):
     
     for r in l:
