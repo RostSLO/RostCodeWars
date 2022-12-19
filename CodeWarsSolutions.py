@@ -1,4 +1,380 @@
 
+def longest_slide_down(pyramid):
+    
+    if len(pyramid) == 0: return 0
+
+    if len(pyramid) == 1: return pyramid[0]
+
+    resValue = 0
+    maxValue = 0
+    maxValueIndex = 0
+    
+    # calculate the first two rows 
+    maxValue = max(pyramid[1][0], pyramid[1][1])
+    resValue = pyramid[0][0] + maxValue
+    maxValueIndex = pyramid[1].index(maxValue)
+
+    # contine from the row #3
+    for i in range(2, len(pyramid)):
+        if maxValueIndex == 0:
+            maxValue = max(pyramid[i][0], pyramid[i][1])
+            if maxValue == pyramid[i][0]: maxValueIndex = 0
+            else: maxValueIndex = 1
+        else:
+            #maxValue = max(pyramid[i][maxValueIndex-1],pyramid[i][maxValueIndex+1])
+            maxValue = max(pyramid[i][maxValueIndex], pyramid[i][maxValueIndex+1])
+            if pyramid[i][maxValueIndex + 1] == maxValue: maxValueIndex += 1 
+
+        resValue += maxValue
+
+    return resValue
+
+print(longest_slide_down([[75], 
+[95, 64], 
+[17, 47, 82], 
+[18, 35, 87, 10], 
+[20, 4, 82, 47, 65], 
+[19, 1, 23, 75, 3, 34], 
+[88, 2, 77, 73, 7, 63, 67], 
+[99, 65, 4, 28, 6, 16, 70, 92], 
+[41, 41, 26, 56, 83, 40, 80, 70, 33], 
+[41, 48, 72, 33, 47, 32, 37, 16, 94, 29], 
+[53, 71, 44, 65, 25, 43, 91, 52, 97, 51, 14], 
+[70, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 57], 
+[91, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48], 
+[63, 66, 4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31], 
+[4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23]]))
+
+print(longest_slide_down([
+                                        [75],
+                                      [95, 64],
+                                    [17, 47, 82],
+                                  [18, 35, 87, 10],
+                                [20,  4, 82, 47, 65],
+                              [19,  1, 23, 75,  3, 34],
+                            [88,  2, 77, 73,  7, 63, 67],
+                          [99, 65,  4, 28,  6, 16, 70, 92],
+                        [41, 41, 26, 56, 83, 40, 80, 70, 33],
+                      [41, 48, 72, 33, 47, 32, 37, 16, 94, 29],
+                    [53, 71, 44, 65, 25, 43, 91, 52, 97, 51, 14],
+                  [70, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 57],
+                [91, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48],
+              [63, 66,  4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31],
+            [ 4, 62, 98, 27, 23,  9, 70, 98, 73, 93, 38, 53, 60,  4, 23],
+            ]))
+#print(RomanNumerals.to_roman(739))
+#print(RomanNumerals.from_roman('XXI'))
+#print(RomanNumerals.from_roman('MCDXCV'))
+#print(mix("Lords of the Fallen", "gamekult"))
+#print(mix("codewars", "codewars"))
+#print(mix("A generation must confront the looming ", "codewarrs"))
+
+
+
+'''
+
+class RomanNumerals:
+
+    @staticmethod
+    def iterTransforming(remValue, levelValue):
+        return [remValue%levelValue, int(remValue/levelValue)]
+    
+    @staticmethod
+    def to_roman(val):
+        
+        if val == 0: return "Now"
+        
+        decypher = [
+        ["M", 1000],
+        ["CM", 900],
+        ["D", 500],
+        ["CD", 400],
+        ["C", 100],
+        ["XC", 90],
+        ["L", 50],
+        ["XL", 40],
+        ["X", 10],
+        ["IX", 9],
+        ["V", 5],
+        ["IV", 4],
+        ["I", 1]
+        ]
+        res = [val, -1]
+        finalRes = []
+        
+        # Check if value is higher than particular level in the decypher and start iterating 
+        # from this level 
+        counter = 0
+
+        while res[0] > 0:
+
+            # counter will iterate through decypher dict, but first we should check what is the next
+            # closest level for the remainder
+            while res[0] < decypher[counter][1]: 
+                t = decypher[counter][1]
+                counter += 1
+
+            # Computation that will take 1: number value (remaining), 2: level (M, or D etc...)
+            # returns: 1: reminder; 2: amount of levels in the number value (remainder for the next one if not 0)
+            res = [res[0]%decypher[counter][1], int(res[0]/decypher[counter][1])]
+
+            finalRes.append(decypher[counter][0]*res[1])
+
+        return ''.join(x for x in finalRes)
+
+    @staticmethod
+    def from_roman(roman_num):
+        
+        if roman_num == 0: return "Now"
+        
+        decypher = [
+        ["CM", 900],
+        ["CD", 400],
+        ["XC", 90],
+        ["IX", 9],        
+        ["IV", 4],
+        ["XL", 40],
+        ["M", 1000],
+        ["D", 500],
+        ["C", 100],
+        ["L", 50],
+        ["X", 10],
+        ["V", 5],
+        ["I", 1]        ]
+        finalRes = []
+        for x in decypher:
+            if roman_num.count(x[0]) > 0: 
+                finalRes.append(x[1]*roman_num.count(x[0]))
+                roman_num = roman_num.replace(x[0]*roman_num.count(x[0]), '')
+            if len(roman_num) == 0:
+                break
+        
+        return sum(x for x in finalRes)
+
+
+def fix(l, a, b):
+   """let l.index(a) < l.index(b)"""
+   if l.index(a) > l.index(b):
+       l.remove(a)
+       l.insert(l.index(b), a)
+
+def recoverSecret(triplets):
+  r = list(set([i for l in triplets for i in l]))
+  for l in triplets:
+    fix(r, l[1], l[2])
+    fix(r, l[0], l[1])
+  return ''.join(r)
+  
+
+
+#triplets = [
+#  ['t','u','p'],
+#  ['w','h','i'],
+#  ['t','s','u'],
+#  ['a','t','s'],
+#  ['h','a','p'],
+#  ['t','i','s'],
+#   ['w','h','s']]
+triplets = [['t', 's', 'f'], 
+['a', 's', 'u'], 
+['m', 'a', 'f'], 
+['a', 'i', 'n'], 
+['s', 'u', 'n'], 
+['m', 'f', 'u'], 
+['a', 't', 'h'], 
+['t', 'h', 'i'], 
+['h', 'i', 'f'], 
+['m', 'h', 'f'], 
+['a', 'u', 'n'], 
+['m', 'a', 't'], 
+['f', 'u', 'n'], 
+['h', 's', 'n'], 
+['a', 'i', 's'], 
+['m', 's', 'n'], 
+['m', 's', 'u']]
+print(recoverSecret(triplets))
+
+
+
+
+def perm(str):
+
+    resList = []
+
+    l = list(str)
+
+    if len(l) == 0: return []
+
+    if len(l) == 1: return [l]
+
+    for i in range(len(l)):
+        m = l[i]
+
+        tempList = l[:i] + l[i+1:]
+
+        for p in perm(tempList):
+            resList.append([m] + p)
+
+    return resList
+
+
+
+def dbl_linear(n):
+	# your code
+
+    res = []
+    temp = []
+    i = 0
+
+    if n == 0: return 1
+    if n == 1: return 3
+    if n == 2: return 4
+
+    res = res+ [1] 
+
+    while i < n/2+n/10+3:
+        res = res + [res[i]*2+1] + [res[i]*3+1]
+        i += 1
+        if i%3 == 0: 
+            temp = res[len(res)-i:]
+            res = res[:len(res)-i]
+            temp.sort()
+            res = res + temp
+
+    res = list( dict.fromkeys(res) )
+
+    return res[n]
+
+
+
+# take second element for sort
+def takeThird(elem):
+    return len(elem[2])
+
+def mix(s1, s2):
+    # your code
+
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    lTemp1 = []
+    lTemp2 = []
+    lTemp3 = []
+    lRes = []
+    lResFinal = []
+    res = ''
+
+
+    # 1. calculate number of different letter in each string and put result in temp storage
+    # reviewing alphabetically should guarantee the proper sequense, i think (?)
+    for x in alphabet:
+        if s1.count(x) == s2.count(x) and s1.count(x) > 1: lRes = lRes + [(x, "=", s1.count(x)*x, s1.count(x))]
+        elif s1.count(x) > s2.count(x) and s1.count(x) > 1: lRes = lRes + [(x, 1, s1.count(x)*x, s1.count(x))]
+        elif s2.count(x) > 1: lRes = lRes + [(x, 2, s2.count(x)*x, s2.count(x))]
+
+    if len(lRes) == 0: return ''
+    elif len(lRes) > 1:
+
+        lRes.sort(key=takeThird, reverse=True)
+        start = 0
+        
+        if lRes[0][1] == 1: lTemp1.append(lRes[0])
+        elif lRes[0][1] == 2: lTemp2.append(lRes[0])
+        else: lTemp3.append(lRes[0])
+        
+        for i in range(1, len(lRes)):
+            if lRes[i-1][3] == lRes[i][3]:
+                if lRes[i][1] == 1: lTemp1.append(lRes[i])
+                elif lRes[i][1] == 2: lTemp2.append(lRes[i])
+                else: lTemp3.append(lRes[i])
+            else:
+                if len(lTemp1) == 0 and len(lTemp2) == 0 and len(lTemp3) == 0:
+                    if 1 < len(lRes) - 1:
+                        lResFinal = lResFinal.append(lRes[i-1])  
+                    else: lResFinal = lResFinal.append(lRes[i])                    
+                else: lResFinal = lResFinal + lTemp1 + lTemp2 + lTemp3
+                lTemp1 = []
+                lTemp2 = []
+                lTemp3 = []
+                if lRes[i][1] == 1: lTemp1.append(lRes[i])
+                elif lRes[i][1] == 2: lTemp2.append(lRes[i])
+                else: lTemp3.append(lRes[i]) 
+
+        if len(lTemp1) != 0 or len(lTemp2) != 0 or len(lTemp3) != 0:
+            lResFinal = lResFinal + lTemp1 + lTemp2 + lTemp3    
+    else: 
+        return str(lRes[1])+":"+lRes[2]
+
+    return '/'.join(str(x[1])+":"+x[2] for x in lResFinal if x[3] > 1)
+
+
+def permutations(s):
+    
+    # return string if it has 1 character
+    if len(s) == 1: return [s]
+
+    # start permutations
+    l = []
+    d = {}
+
+    for i in range(len(s)):
+        m = s[i]
+
+        remLst = s[:i] + s[i+1:]
+
+        for x in permutations(remLst):
+            #if l.count(m + x) == 0: 
+            #l = l+ [m + x]
+            d[m + x] = None
+
+
+    return list(d)
+
+
+
+def sum_of_intervals(intervals):
+
+    if len(intervals) == 1: return intervals[0][1] - intervals[0][0]
+
+    res = []
+    temp = []
+    s = 0
+
+    for i in range(len(intervals)):
+        if intervals[i] != (0, 0):
+            change = False
+            temp = [intervals[i]]
+            for j in range(len(intervals)):
+                if j != i and intervals[j] != (0, 0):
+                    if temp[0][1] >= intervals[j][0] and temp[0][0] <= intervals[j][1]:
+                        # Situation 1: second interval starts in the first but end oustide of the first
+                        if temp[0][0] <= intervals[j][0] and temp[0][1] <= intervals[j][1]:
+                            temp = [(temp[0][0], intervals[j][1])]
+                            change = True
+
+                        # Situation 2: second interval iside the first
+                        elif temp[0][0] <= intervals[j][0] and temp[0][1] >= intervals[j][1]:
+                            change = True
+
+                        # Situation 3: second interval starts earlier than the first but ends inside the first
+                        elif temp[0][0] >= intervals[j][0] and temp[0][1] >= intervals[j][1]:
+                            temp = [(intervals[j][0], temp[0][1])]
+                            change = True
+
+                        # Situation 4: first interval inside the second one
+                        elif temp[0][0] >= intervals[j][0] and temp[0][1] <= intervals[j][1]:
+                            temp = [(intervals[j][0], intervals[j][1])]
+                            change = True 
+
+                        if change:
+                            intervals[j] = (0, 0)
+            res = res + temp
+            intervals = intervals + temp
+            intervals[i] = (0, 0)
+
+    for x in intervals:
+        s += abs(x[1] - x[0])
+
+    return s
+
 
 def move_zeros(lst):
     
@@ -7,17 +383,6 @@ def move_zeros(lst):
     return newLst
 
 
-
-print(move_zeros([1, 2, 0, 1, 0, 1, 0, 3, 0, 1]))
-print(move_zeros([9, 0, 0, 9, 1, 2, 0, 1, 0, 1, 0, 3, 0, 1, 9, 0, 0, 0, 0, 9]))
-print(move_zeros([0, 0]))
-print(move_zeros([0]))
-print(move_zeros([]))
-
-
-
-
-'''
 def perimeter(n):
     
     last = new = res = 1
