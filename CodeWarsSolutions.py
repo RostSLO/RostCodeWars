@@ -1,49 +1,50 @@
 
-def longest_slide_down(pyramid):
-    
-    if len(pyramid) == 0: return 0
+def decompose(n):
+    def _recurse(s, i):
+        if s < 0:
+            return None
+        if s == 0:
+            return []
+        for j in range(i-1, 0, -1):
+            sub = _recurse(s - j**2, j)
+            if sub != None:
+                return sub + [j]
+    return _recurse(n**2, n)
 
-    if len(pyramid) == 1: return pyramid[0]
 
-    resValue = 0
-    maxValue = 0
-    maxValueIndex = 0
-    
-    # calculate the first two rows 
-    maxValue = max(pyramid[1][0], pyramid[1][1])
-    resValue = pyramid[0][0] + maxValue
-    maxValueIndex = pyramid[1].index(maxValue)
 
-    # contine from the row #3
-    for i in range(2, len(pyramid)):
-        if maxValueIndex == 0:
-            maxValue = max(pyramid[i][0], pyramid[i][1])
-            if maxValue == pyramid[i][0]: maxValueIndex = 0
-            else: maxValueIndex = 1
-        else:
-            #maxValue = max(pyramid[i][maxValueIndex-1],pyramid[i][maxValueIndex+1])
-            maxValue = max(pyramid[i][maxValueIndex], pyramid[i][maxValueIndex+1])
-            if pyramid[i][maxValueIndex + 1] == maxValue: maxValueIndex += 1 
 
-        resValue += maxValue
+print(decompose(625))
+#print(decompose(8))
+#print(RomanNumerals.from_roman('MCDXCV'))
+#print(mix("Lords of the Fallen", "gamekult"))
+#print(mix("codewars", "codewars"))
+#print(mix("A generation must confront the looming ", "codewarrs"))
 
-    return resValue
 
-print(longest_slide_down([[75], 
-[95, 64], 
-[17, 47, 82], 
-[18, 35, 87, 10], 
-[20, 4, 82, 47, 65], 
-[19, 1, 23, 75, 3, 34], 
-[88, 2, 77, 73, 7, 63, 67], 
-[99, 65, 4, 28, 6, 16, 70, 92], 
-[41, 41, 26, 56, 83, 40, 80, 70, 33], 
-[41, 48, 72, 33, 47, 32, 37, 16, 94, 29], 
-[53, 71, 44, 65, 25, 43, 91, 52, 97, 51, 14], 
-[70, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 57], 
-[91, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48], 
-[63, 66, 4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31], 
-[4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23]]))
+
+
+'''
+
+def is_list(p):
+    return isinstance(p, list)
+
+def same_structure_as(original,other):
+    if not is_list(original) and not is_list(other):
+        return True
+    elif (is_list(original) and is_list(other)) and (len(original) == len(other)):
+        return all(map(same_structure_as, original, other)) # Here
+    return False
+
+
+
+
+def longest_slide_down(p):
+    res = p.pop()
+    while p:
+        tmp = p.pop()
+        res = [tmp[i] + max(res[i],res[i+1])  for i in range(len(tmp))] 
+    return res.pop()
 
 print(longest_slide_down([
                                         [75],
@@ -62,16 +63,7 @@ print(longest_slide_down([
               [63, 66,  4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31],
             [ 4, 62, 98, 27, 23,  9, 70, 98, 73, 93, 38, 53, 60,  4, 23],
             ]))
-#print(RomanNumerals.to_roman(739))
-#print(RomanNumerals.from_roman('XXI'))
-#print(RomanNumerals.from_roman('MCDXCV'))
-#print(mix("Lords of the Fallen", "gamekult"))
-#print(mix("codewars", "codewars"))
-#print(mix("A generation must confront the looming ", "codewarrs"))
 
-
-
-'''
 
 class RomanNumerals:
 
