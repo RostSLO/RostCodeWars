@@ -1,4 +1,72 @@
 
+
+def next_smaller(n):
+
+    res = []
+    
+    strNum = str(n)
+    for i in range(len(strNum)-1, 0, -1):
+        m = strNum[i]
+        for j in range(i-1, -1, -1):
+            if int(m) < int(strNum[j]):
+                res.append(strNum[:j] + m + strNum[i+1:])
+
+    res.sort(reverse = True)
+    print(res)
+    return res[0]
+
+print(next_smaller(531))
+print(next_smaller(29009))
+#print(RomanNumerals.from_roman('MCDXCV'))
+#print(mix("Lords of the Fallen", "gamekult"))
+#print(mix("codewars", "codewars"))
+#print(mix("A generation must confront the looming ", "codewarrs"))
+
+
+
+
+'''
+
+class Node:
+    def __init__(self, L, R, n):
+        self.left = L
+        self.right = R
+        self.value = n
+
+
+def tree_by_levels(node):
+
+    level = 0
+    res = []
+    finalRes = []
+
+    if node == None: return []
+
+    # take second element for sort
+    def takeSecond(elem):
+        return elem[1]
+
+
+    def serf_the_tree(node, level, res):
+        level += 1
+        if node.left != None: 
+            res = serf_the_tree(node.left, level, res)
+
+        if node.right != None: 
+            res = serf_the_tree(node.right, level, res)
+
+        return res + [(node.value, level)]
+
+    finalRes = serf_the_tree(node, level, res)
+    finalRes.sort(key=takeSecond)
+
+    return [x[0] for x in finalRes]
+
+#       1
+#   2       3
+#     4   5    6
+# [1, 2, 3, 4, 5, 6]
+
 def decompose(n):
     def _recurse(s, i):
         if s < 0:
@@ -13,18 +81,6 @@ def decompose(n):
 
 
 
-
-print(decompose(625))
-#print(decompose(8))
-#print(RomanNumerals.from_roman('MCDXCV'))
-#print(mix("Lords of the Fallen", "gamekult"))
-#print(mix("codewars", "codewars"))
-#print(mix("A generation must confront the looming ", "codewarrs"))
-
-
-
-
-'''
 
 def is_list(p):
     return isinstance(p, list)
