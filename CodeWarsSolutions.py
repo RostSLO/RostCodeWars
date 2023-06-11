@@ -1,5 +1,105 @@
 
 
+print(setZeroes([[0,1,2,0],[3,4,5,2],[1,3,1,5]]))
+print(setZeroes([[1,1,1],[1,0,1],[1,1,1]]))
+print(setZeroes([[1,2,3,4],[5,0,7,8],[0,10,11,12],[13,14,15,0]]))
+#print(mix("Lords of the Fallen", "gamekult"))
+#print(mix("codewars", "codewars"))
+#print(mix("A generation must confront the looming ", "codewarrs"))
+
+'''
+
+def setZeroesRowCol(matrix, zeroesList):
+    
+    for l in zeroesList:
+    
+        for i in range(len(matrix[l[0]])):
+            matrix[l[0]][i] = 0
+
+        for i in range(len(matrix)):
+                matrix[i][l[1]] = 0
+
+    return matrix
+
+def setZeroes(matrix):
+
+    if len(matrix) == 0: return []
+
+    rowCounter = 0
+    zeroesList = []
+
+    for row in matrix:
+        for i in range(len(row)):
+            if row[i] == 0:
+                zeroesList.append([rowCounter, i])
+        rowCounter += 1
+
+    if len(zeroesList) > 0: return setZeroesRowCol(matrix, zeroesList)
+    else: return []
+
+
+
+def threeSum(nums):
+    
+    if len(nums) < 3: return []
+
+    res = []
+    
+    for i in range (0, len(nums)-2):
+        for j in range (i+1, len(nums)-1):
+            for k in range (j+1, len(nums)):
+                if nums[i] + nums[j] + nums[k] == 0:
+                    tempRes = [nums[i], nums[j], nums[k]]
+                    tempRes.sort()
+                    if tempRes not in res:
+                        res.append(tempRes)
+   
+    return res
+
+
+
+class Stack:
+   def __init__(self):
+      self.stack = []
+
+def insertion_sort(InputList):
+   for i in range(1, len(InputList)):
+      j = i-1
+      nxt_element = InputList[i]
+# Compare the current element with next one
+   while (InputList[j] > nxt_element) and (j >= 0):
+      InputList[j+1] = InputList[j]
+      j=j-1
+   InputList[j+1] = nxt_element
+list = [19,2,31,45,30,11,121,27]
+insertion_sort(list)
+print(list)
+
+
+
+def is_pangram(s):
+    
+    abet = 'abcdefghijklmnopqrstuvwxyz'
+    s = "".join(c for c in s if c.isalpha()).lower()
+    for x in abet: 
+        if x not in s: return False
+
+    return True
+
+
+
+def tower_builder(n_floors):
+    # (n-1)*2 + 1
+
+    res = []
+    
+    for i in range (n_floors):
+        res.append(" "*(n_floors-i-1) + "*"*(2*i+1) + " "*(n_floors-i-1))
+
+    return res
+
+
+
 def next_smaller(n):
 
     res = []
@@ -15,17 +115,9 @@ def next_smaller(n):
     print(res)
     return res[0]
 
-print(next_smaller(531))
-print(next_smaller(29009))
-#print(RomanNumerals.from_roman('MCDXCV'))
-#print(mix("Lords of the Fallen", "gamekult"))
-#print(mix("codewars", "codewars"))
-#print(mix("A generation must confront the looming ", "codewarrs"))
 
 
 
-
-'''
 
 class Node:
     def __init__(self, L, R, n):
