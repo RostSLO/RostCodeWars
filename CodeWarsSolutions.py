@@ -1,13 +1,153 @@
 
+class binaryTree():
 
-print(setZeroes([[0,1,2,0],[3,4,5,2],[1,3,1,5]]))
-print(setZeroes([[1,1,1],[1,0,1],[1,1,1]]))
-print(setZeroes([[1,2,3,4],[5,0,7,8],[0,10,11,12],[13,14,15,0]]))
+    def __init__(self, data):
+        
+        self.data = data
+        self.leftNode = None
+        self.rightNode = None
+
+    def addNode(self, val):
+
+        if self.data > val: 
+            if self.leftNode == None: 
+                self.leftNode = binaryTree(val)
+                return
+            else: self.leftNode.addNode(val)
+        else: 
+            if self.rightNode == None:
+                self.rightNode = binaryTree(val)
+                return
+            else: self.rightNode.addNode(val)
+
+def printTree(node):
+
+    if node == None: return
+
+    printTree(node.leftNode)
+    print(node.data)
+    printTree(node.rightNode)
+
+
+rootTree = binaryTree(33)
+rootTree.addNode(15)
+rootTree.addNode(75)
+rootTree.addNode(25)
+rootTree.addNode(65)
+rootTree.addNode(35)
+rootTree.addNode(45)
+printTree(rootTree)
+
+
+
+
+
+
+
+
+
+#print(sort([75, 66, 55, 44, 33, 22, 11, 0]))
+#print(setZeroes([[1,1,1],[1,0,1],[1,1,1]]))
+#print(setZeroes([[1,2,3,4],[5,0,7,8],[0,10,11,12],[13,14,15,0]]))
 #print(mix("Lords of the Fallen", "gamekult"))
 #print(mix("codewars", "codewars"))
 #print(mix("A generation must confront the looming ", "codewarrs"))
 
+
+
 '''
+class binaryTree():
+
+    def __init__(self, data):
+
+        self.data = data
+        self.leftNode = None
+        self.rightNode = None
+
+    def addNode(self, val):
+        
+        node = self
+
+        if node.data < val:
+            if node.rightNode == None: node.rightNode = binaryTree(val)
+            else: node.rightNode.addNode(val)
+        else: 
+            if node.leftNode == None: node.leftNode = binaryTree(val)
+            else: node.leftNode.addNode(val)
+
+    def returnNodeByValue(self, val):
+
+        res = None
+
+        if self == None: return None
+
+        if val == self.data:
+            res = self
+            return res
+
+        if self.data > val: 
+            if self.leftNode == None: return None
+            else: res = self.leftNode.returnNodeByValue(val)
+        else: 
+            if self.rightNode == None: return None
+            else: res = self.rightNode.returnNodeByValue(val)
+
+        return res
+
+def printTree(node):
+
+    if node == None: return
+
+    printTree(node.leftNode)
+    print(node.data)
+    printTree(node.rightNode)
+
+
+
+
+rootTree = binaryTree(33)
+rootTree.addNode(15)
+rootTree.addNode(75)
+rootTree.addNode(25)
+rootTree.addNode(65)
+rootTree.addNode(35)
+rootTree.addNode(45)
+#printTree(rootTree)
+nodeValue = 33
+someNode = rootTree.returnNodeByValue(nodeValue)
+if someNode != None: printTree(someNode)
+else: print("Node {} does not exist".format(nodeValue))
+
+
+def sorting(leftList, rightList):
+
+    resList = []
+    leftIndex = 0
+    rightIndex = 0
+
+    while (leftIndex < len(leftList)) and (rightIndex < len(rightList)):
+        if leftList[leftIndex] < rightList[rightIndex]:
+            resList.append(leftList[leftIndex])
+            leftIndex += 1
+        else:
+            resList.append(rightList[rightIndex])
+            rightIndex += 1
+
+    return resList + leftList[leftIndex:] + rightList[rightIndex:]
+
+
+def sort(sortList):
+
+    if len(sortList) < 2: return sortList
+
+    midPoint = int(len(sortList) / 2)
+
+    leftList = sortList[:midPoint]
+    rightList = sortList[midPoint:]
+
+    return sorting(sort(leftList), sort(rightList))
+
+
 
 def setZeroesRowCol(matrix, zeroesList):
     
