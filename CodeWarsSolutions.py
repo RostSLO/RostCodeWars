@@ -1,48 +1,38 @@
 
-class binaryTree():
 
-    def __init__(self, data):
-        
-        self.data = data
-        self.leftNode = None
-        self.rightNode = None
+class hashTable():
+    
+    def __init__(self):
+        self.dict = {}
 
-    def addNode(self, val):
+    def addToTable(self, key, value):
 
-        if self.data > val: 
-            if self.leftNode == None: 
-                self.leftNode = binaryTree(val)
-                return
-            else: self.leftNode.addNode(val)
-        else: 
-            if self.rightNode == None:
-                self.rightNode = binaryTree(val)
-                return
-            else: self.rightNode.addNode(val)
+        summ = 0
 
-def printTree(node):
+        for c in key:
+            summ += ord(c)
 
-    if node == None: return
+        index = summ % 4096
 
-    printTree(node.leftNode)
-    print(node.data)
-    printTree(node.rightNode)
+        self.dict[index] = value
+
+    def valueByIndex(self, index):
+
+        return self[index]
+
+    def printTable(self):
+
+        for k, v in self.dict.items():
+            print(k, v)
 
 
-rootTree = binaryTree(33)
-rootTree.addNode(15)
-rootTree.addNode(75)
-rootTree.addNode(25)
-rootTree.addNode(65)
-rootTree.addNode(35)
-rootTree.addNode(45)
-printTree(rootTree)
-
-
-
-
-
-
+ht = hashTable()
+ht.addToTable("Rost", "TPM")
+ht.addToTable("Kent", "EM Orchestration")
+ht.addToTable("Chhavi", "EM Eventarc")
+ht.addToTable("Yash", "EM Message Streams")
+ht.addToTable("Hamid", "UTL")
+ht.printTable()
 
 
 
@@ -104,19 +94,6 @@ def printTree(node):
 
 
 
-
-rootTree = binaryTree(33)
-rootTree.addNode(15)
-rootTree.addNode(75)
-rootTree.addNode(25)
-rootTree.addNode(65)
-rootTree.addNode(35)
-rootTree.addNode(45)
-#printTree(rootTree)
-nodeValue = 33
-someNode = rootTree.returnNodeByValue(nodeValue)
-if someNode != None: printTree(someNode)
-else: print("Node {} does not exist".format(nodeValue))
 
 
 def sorting(leftList, rightList):
